@@ -4,6 +4,8 @@
  */
 package sarh.forms;
 
+import java.awt.Color;
+
 /**
  *
  * @author User1
@@ -26,21 +28,172 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        deskMain = new javax.swing.JDesktopPane();
+        txtCorreoCorp = new javax.swing.JTextField();
+        bttLogin = new javax.swing.JButton();
+        lblLoginH2 = new javax.swing.JLabel();
+        lblPasswordRecuperar = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        lblLoginH1 = new javax.swing.JLabel();
+        ckbMostrarPassword = new javax.swing.JCheckBox();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SARH");
+
+        txtCorreoCorp.setBackground(new java.awt.Color(51, 51, 51));
+        txtCorreoCorp.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtCorreoCorp.setForeground(new java.awt.Color(153, 153, 153));
+        txtCorreoCorp.setText("Email Corporativo");
+        txtCorreoCorp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51), 5));
+        txtCorreoCorp.setPreferredSize(new java.awt.Dimension(64, 22));
+        txtCorreoCorp.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCorreoCorpFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoCorpFocusLost(evt);
+            }
+        });
+
+        bttLogin.setBackground(new java.awt.Color(51, 51, 51));
+        bttLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bttLogin.setForeground(new java.awt.Color(234, 234, 234));
+        bttLogin.setText("Ingresar");
+        bttLogin.setBorder(null);
+
+        lblLoginH2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblLoginH2.setForeground(new java.awt.Color(234, 234, 234));
+        lblLoginH2.setText("¿Olvidó su contraseña?");
+
+        lblPasswordRecuperar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPasswordRecuperar.setForeground(new java.awt.Color(234, 234, 234));
+        lblPasswordRecuperar.setText("Haga clic aquí");
+
+        txtPassword.setBackground(new java.awt.Color(51, 51, 51));
+        txtPassword.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(153, 153, 153));
+        txtPassword.setText("Contraseña");
+        txtPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51), 5));
+        txtPassword.setEchoChar('\u0000');
+        txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusLost(evt);
+            }
+        });
+
+        lblLoginH1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblLoginH1.setForeground(new java.awt.Color(234, 234, 234));
+        lblLoginH1.setText("Inicio de sesión");
+
+        ckbMostrarPassword.setForeground(new java.awt.Color(234, 234, 234));
+        ckbMostrarPassword.setText("Mostrar Contraseña");
+        ckbMostrarPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbMostrarPasswordActionPerformed(evt);
+            }
+        });
+
+        deskMain.setLayer(txtCorreoCorp, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskMain.setLayer(bttLogin, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskMain.setLayer(lblLoginH2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskMain.setLayer(lblPasswordRecuperar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskMain.setLayer(txtPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskMain.setLayer(lblLoginH1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskMain.setLayer(ckbMostrarPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout deskMainLayout = new javax.swing.GroupLayout(deskMain);
+        deskMain.setLayout(deskMainLayout);
+        deskMainLayout.setHorizontalGroup(
+            deskMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deskMainLayout.createSequentialGroup()
+                .addContainerGap(105, Short.MAX_VALUE)
+                .addGroup(deskMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtCorreoCorp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLoginH2)
+                    .addComponent(lblPasswordRecuperar)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLoginH1)
+                    .addComponent(ckbMostrarPassword))
+                .addGap(105, 105, 105))
+        );
+        deskMainLayout.setVerticalGroup(
+            deskMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deskMainLayout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(lblLoginH1)
+                .addGap(130, 130, 130)
+                .addComponent(txtCorreoCorp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckbMostrarPassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bttLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLoginH2)
+                .addGap(2, 2, 2)
+                .addComponent(lblPasswordRecuperar)
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(deskMain, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(deskMain)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtCorreoCorpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoCorpFocusGained
+        if(txtCorreoCorp.getText().equals("Email Corporativo")){
+            txtCorreoCorp.setText("");
+            txtCorreoCorp.setForeground(new Color(234, 234, 234));
+        }        
+    }//GEN-LAST:event_txtCorreoCorpFocusGained
+
+    private void txtCorreoCorpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoCorpFocusLost
+        if(txtCorreoCorp.getText().equals("")){
+            txtCorreoCorp.setText("Email Corporativo");
+            txtCorreoCorp.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtCorreoCorpFocusLost
+
+    private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
+        String password = String.valueOf(txtPassword.getPassword());        
+        if(password.equals("Contraseña")){
+            txtPassword.setText("");
+            txtPassword.setEchoChar('*');            
+            txtPassword.setForeground(new Color(234, 234, 234));
+        }        
+    }//GEN-LAST:event_txtPasswordFocusGained
+
+    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
+        String password = String.valueOf(txtPassword.getPassword());        
+        if(password.equals("")){
+            txtPassword.setText("Contraseña");
+            txtPassword.setEchoChar((char)0);            
+            txtPassword.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtPasswordFocusLost
+
+    private void ckbMostrarPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbMostrarPasswordActionPerformed
+        if(ckbMostrarPassword.isSelected()){
+            txtPassword.setEchoChar((char) 0);
+        } else{
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_ckbMostrarPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +231,13 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bttLogin;
+    private javax.swing.JCheckBox ckbMostrarPassword;
+    private javax.swing.JDesktopPane deskMain;
+    private javax.swing.JLabel lblLoginH1;
+    private javax.swing.JLabel lblLoginH2;
+    private javax.swing.JLabel lblPasswordRecuperar;
+    private javax.swing.JTextField txtCorreoCorp;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
