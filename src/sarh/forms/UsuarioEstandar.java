@@ -4,6 +4,8 @@
  */
 package sarh.forms;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User1
@@ -27,33 +29,259 @@ public class UsuarioEstandar extends javax.swing.JFrame {
     private void initComponents() {
 
         deskUsuarioEstandar = new javax.swing.JDesktopPane();
+        scrollUserInfo = new javax.swing.JScrollPane();
+        paneUserInfo = new javax.swing.JPanel();
+        lblProfilePicture = new javax.swing.JLabel();
+        panelInfoPersonal = new javax.swing.JPanel();
+        lblNombre = new javax.swing.JLabel();
+        Nombre = new javax.swing.JLabel();
+        lblDistrito = new javax.swing.JLabel();
+        lblFechaNacimiento = new javax.swing.JLabel();
+        FechaNacimiento = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
+        Direccion = new javax.swing.JLabel();
+        lblDNI = new javax.swing.JLabel();
+        DNI = new javax.swing.JLabel();
+        lblTelefonoCelular = new javax.swing.JLabel();
+        TelefonoCelular = new javax.swing.JLabel();
+        lblEmailPersonal = new javax.swing.JLabel();
+        EmailPersonal = new javax.swing.JLabel();
+        panelInfoLaboral = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        menuEstandar = new javax.swing.JMenuBar();
+        menuInfo = new javax.swing.JMenu();
+        menuSolicitudes = new javax.swing.JMenu();
+        opcionLogOff = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        scrollUserInfo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 1, 0, 1));
+        scrollUserInfo.setPreferredSize(new java.awt.Dimension(992, 713));
+
+        paneUserInfo.setPreferredSize(new java.awt.Dimension(992, 713));
+
+        lblProfilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/defaultProfilePicture.jpg"))); // NOI18N
+
+        panelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Personal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
+        panelInfoPersonal.setPreferredSize(new java.awt.Dimension(722, 150));
+
+        lblNombre.setText("Nombre Completo:");
+
+        lblDistrito.setText("Distrito:");
+
+        FechaNacimiento.setText("Fecha de Nacimiento:");
+
+        lblDireccion.setText("Dirección:");
+
+        lblDNI.setText("Documento de Identidad:");
+
+        lblTelefonoCelular.setText("Teléfono Celular:");
+
+        lblEmailPersonal.setText("Correo Personal:");
+
+        javax.swing.GroupLayout panelInfoPersonalLayout = new javax.swing.GroupLayout(panelInfoPersonal);
+        panelInfoPersonal.setLayout(panelInfoPersonalLayout);
+        panelInfoPersonalLayout.setHorizontalGroup(
+            panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoPersonalLayout.createSequentialGroup()
+                .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Nombre)
+                    .addComponent(lblNombre)
+                    .addComponent(lblDireccion)
+                    .addComponent(Direccion))
+                .addGap(80, 80, 80)
+                .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TelefonoCelular)
+                    .addComponent(lblTelefonoCelular)
+                    .addComponent(lblFechaNacimiento)
+                    .addComponent(FechaNacimiento))
+                .addGap(80, 80, 80)
+                .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEmailPersonal)
+                    .addComponent(EmailPersonal)
+                    .addGroup(panelInfoPersonalLayout.createSequentialGroup()
+                        .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDNI)
+                            .addComponent(DNI))
+                        .addGap(80, 80, 80)
+                        .addComponent(lblDistrito)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelInfoPersonalLayout.setVerticalGroup(
+            panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoPersonalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInfoPersonalLayout.createSequentialGroup()
+                        .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(FechaNacimiento)
+                            .addComponent(lblDNI))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFechaNacimiento)
+                            .addComponent(DNI)))
+                    .addGroup(panelInfoPersonalLayout.createSequentialGroup()
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTelefonoCelular)
+                        .addComponent(lblEmailPersonal))
+                    .addComponent(lblDireccion))
+                .addGap(66, 66, 66)
+                .addGroup(panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TelefonoCelular)
+                        .addComponent(EmailPersonal))
+                    .addComponent(Direccion, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+
+        panelInfoLaboral.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Laboral", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
+
+        jLabel1.setText("Puesto:");
+
+        jLabel2.setText("Fecha de Inicio:");
+
+        jLabel3.setText("Fecha de Fin:");
+
+        jLabel4.setText("Sueldo Base:");
+
+        jLabel5.setText("Unidad Organizativa:");
+
+        jLabel6.setText("Tipo de Contrato:");
+
+        jLabel7.setText("Email Corporativo:");
+
+        javax.swing.GroupLayout panelInfoLaboralLayout = new javax.swing.GroupLayout(panelInfoLaboral);
+        panelInfoLaboral.setLayout(panelInfoLaboralLayout);
+        panelInfoLaboralLayout.setHorizontalGroup(
+            panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoLaboralLayout.createSequentialGroup()
+                .addGroup(panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(80, 80, 80)
+                .addGroup(panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(80, 80, 80)
+                .addGroup(panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoLaboralLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel4))
+                    .addComponent(jLabel7))
+                .addContainerGap(236, Short.MAX_VALUE))
+        );
+        panelInfoLaboralLayout.setVerticalGroup(
+            panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoLaboralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(64, 64, 64)
+                .addGroup(panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout paneUserInfoLayout = new javax.swing.GroupLayout(paneUserInfo);
+        paneUserInfo.setLayout(paneUserInfoLayout);
+        paneUserInfoLayout.setHorizontalGroup(
+            paneUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneUserInfoLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(paneUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelInfoLaboral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelInfoPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, 912, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneUserInfoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblProfilePicture, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(421, 421, 421))
+        );
+        paneUserInfoLayout.setVerticalGroup(
+            paneUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneUserInfoLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lblProfilePicture)
+                .addGap(27, 27, 27)
+                .addComponent(panelInfoPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(panelInfoLaboral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
+        scrollUserInfo.setViewportView(paneUserInfo);
+
+        deskUsuarioEstandar.setLayer(scrollUserInfo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout deskUsuarioEstandarLayout = new javax.swing.GroupLayout(deskUsuarioEstandar);
         deskUsuarioEstandar.setLayout(deskUsuarioEstandarLayout);
         deskUsuarioEstandarLayout.setHorizontalGroup(
             deskUsuarioEstandarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deskUsuarioEstandarLayout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(scrollUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         deskUsuarioEstandarLayout.setVerticalGroup(
             deskUsuarioEstandarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deskUsuarioEstandarLayout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(scrollUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(deskUsuarioEstandar)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(deskUsuarioEstandar)
-        );
+        getContentPane().add(deskUsuarioEstandar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        menuInfo.setText("Información de Usuario");
+        menuEstandar.add(menuInfo);
+
+        menuSolicitudes.setText("Solicitudes Laborales");
+        menuEstandar.add(menuSolicitudes);
+
+        opcionLogOff.setText("Cerrar Sesión");
+        opcionLogOff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                opcionLogOffMouseClicked(evt);
+            }
+        });
+        menuEstandar.add(opcionLogOff);
+
+        setJMenuBar(menuEstandar);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionLogOffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionLogOffMouseClicked
+                
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar su sesión?", "Cerrar Sesión",
+                                                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);        
+        if(resp == 0 || resp ==-1){
+            
+            Principal login = new Principal();
+            this.dispose();            
+            login.show();
+        }
+    }//GEN-LAST:event_opcionLogOffMouseClicked
 
     /**
      * @param args the command line arguments
@@ -91,6 +319,35 @@ public class UsuarioEstandar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DNI;
+    private javax.swing.JLabel Direccion;
+    private javax.swing.JLabel EmailPersonal;
+    private javax.swing.JLabel FechaNacimiento;
+    private javax.swing.JLabel Nombre;
+    private javax.swing.JLabel TelefonoCelular;
     private javax.swing.JDesktopPane deskUsuarioEstandar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblDNI;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblDistrito;
+    private javax.swing.JLabel lblEmailPersonal;
+    private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblProfilePicture;
+    private javax.swing.JLabel lblTelefonoCelular;
+    private javax.swing.JMenuBar menuEstandar;
+    private javax.swing.JMenu menuInfo;
+    private javax.swing.JMenu menuSolicitudes;
+    private javax.swing.JMenu opcionLogOff;
+    private javax.swing.JPanel paneUserInfo;
+    private javax.swing.JPanel panelInfoLaboral;
+    private javax.swing.JPanel panelInfoPersonal;
+    private javax.swing.JScrollPane scrollUserInfo;
     // End of variables declaration//GEN-END:variables
 }

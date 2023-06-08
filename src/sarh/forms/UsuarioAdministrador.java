@@ -1,20 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package sarh.forms;
 
-/**
- *
- * @author User1
- */
+import images.TableActionCellEditor;
+import images.TableActionCellRenderer;
+import images.TableActionEvent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 public class UsuarioAdministrador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form UsuarioAdministrador
-     */
+    
     public UsuarioAdministrador() {
         initComponents();
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEditar(int row) {
+                System.out.println("Editar fila: " + row);
+            }
+
+            @Override
+            public void onBorrar(int row) {
+                if(tableEmpleados.isEditing()){
+                    tableEmpleados.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableEmpleados.getModel();
+                model.removeRow(row);
+            }
+
+            @Override
+            public void onMostrar(int row) {
+                System.out.println("Mostrar fila: " + row);
+            }
+        };
+        tableEmpleados.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
+        tableEmpleados.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
     }
 
     /**
@@ -27,19 +47,124 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     private void initComponents() {
 
         deskUsuarioAdmin = new javax.swing.JDesktopPane();
+        panelLista = new javax.swing.JPanel();
+        scrollLista = new javax.swing.JScrollPane();
+        tableEmpleados = new javax.swing.JTable();
+        menuAdmin = new javax.swing.JMenuBar();
+        menuGestionEmpleados = new javax.swing.JMenu();
+        itemListaEmpleados = new javax.swing.JMenuItem();
+        itemEmpleadosPerformance = new javax.swing.JMenuItem();
+        itemReclutamiento = new javax.swing.JMenuItem();
+        menuNomina = new javax.swing.JMenu();
+        menuSolicitudesLaborales = new javax.swing.JMenu();
+        menuInformes = new javax.swing.JMenu();
+        opcionLogOff = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Puesto", "Unidad Organizativa", "Fecha de Inicio", "Fecha de Fin", "Acción"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableEmpleados.setGridColor(new java.awt.Color(230, 230, 230));
+        tableEmpleados.setRowHeight(40);
+        tableEmpleados.setSelectionBackground(new java.awt.Color(57, 137, 111));
+        tableEmpleados.getTableHeader().setReorderingAllowed(false);
+        scrollLista.setViewportView(tableEmpleados);
+        if (tableEmpleados.getColumnModel().getColumnCount() > 0) {
+            tableEmpleados.getColumnModel().getColumn(0).setResizable(false);
+            tableEmpleados.getColumnModel().getColumn(1).setResizable(false);
+            tableEmpleados.getColumnModel().getColumn(2).setResizable(false);
+            tableEmpleados.getColumnModel().getColumn(3).setResizable(false);
+            tableEmpleados.getColumnModel().getColumn(4).setResizable(false);
+            tableEmpleados.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
+        panelLista.setLayout(panelListaLayout);
+        panelListaLayout.setHorizontalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelListaLayout.setVerticalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        deskUsuarioAdmin.setLayer(panelLista, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout deskUsuarioAdminLayout = new javax.swing.GroupLayout(deskUsuarioAdmin);
         deskUsuarioAdmin.setLayout(deskUsuarioAdminLayout);
         deskUsuarioAdminLayout.setHorizontalGroup(
             deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         deskUsuarioAdminLayout.setVerticalGroup(
             deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
+
+        menuGestionEmpleados.setText("Gestión de Empleados");
+
+        itemListaEmpleados.setText("Lista de Empleados");
+        itemListaEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListaEmpleadosActionPerformed(evt);
+            }
+        });
+        menuGestionEmpleados.add(itemListaEmpleados);
+
+        itemEmpleadosPerformance.setText("Desempeño de Empleados");
+        menuGestionEmpleados.add(itemEmpleadosPerformance);
+
+        itemReclutamiento.setText("Reclutamiento y Selección");
+        menuGestionEmpleados.add(itemReclutamiento);
+
+        menuAdmin.add(menuGestionEmpleados);
+
+        menuNomina.setText("Administrar Nómina");
+        menuAdmin.add(menuNomina);
+
+        menuSolicitudesLaborales.setText("Solicitudes Laborales");
+        menuAdmin.add(menuSolicitudesLaborales);
+
+        menuInformes.setText("Gestión de Informes");
+        menuAdmin.add(menuInformes);
+
+        opcionLogOff.setText("Cerrar Sesión");
+        opcionLogOff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                opcionLogOffMouseClicked(evt);
+            }
+        });
+        menuAdmin.add(opcionLogOff);
+
+        setJMenuBar(menuAdmin);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -54,6 +179,21 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void itemListaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListaEmpleadosActionPerformed
+        
+    }//GEN-LAST:event_itemListaEmpleadosActionPerformed
+
+    private void opcionLogOffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionLogOffMouseClicked
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar su sesión?",
+                                                "Cerrar Sesión", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);        
+        if(resp == 0 || resp ==-1){
+            
+            Principal login = new Principal();
+            this.dispose();            
+            login.show();
+        }
+    }//GEN-LAST:event_opcionLogOffMouseClicked
 
     /**
      * @param args the command line arguments
@@ -92,5 +232,17 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane deskUsuarioAdmin;
+    private javax.swing.JMenuItem itemEmpleadosPerformance;
+    private javax.swing.JMenuItem itemListaEmpleados;
+    private javax.swing.JMenuItem itemReclutamiento;
+    private javax.swing.JMenuBar menuAdmin;
+    private javax.swing.JMenu menuGestionEmpleados;
+    private javax.swing.JMenu menuInformes;
+    private javax.swing.JMenu menuNomina;
+    private javax.swing.JMenu menuSolicitudesLaborales;
+    private javax.swing.JMenu opcionLogOff;
+    private javax.swing.JPanel panelLista;
+    private javax.swing.JScrollPane scrollLista;
+    private javax.swing.JTable tableEmpleados;
     // End of variables declaration//GEN-END:variables
 }

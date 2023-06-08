@@ -5,6 +5,7 @@
 package sarh.forms;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,14 +32,17 @@ public class Principal extends javax.swing.JFrame {
         deskMain = new javax.swing.JDesktopPane();
         txtCorreoCorp = new javax.swing.JTextField();
         bttLogin = new javax.swing.JButton();
-        lblLoginH2 = new javax.swing.JLabel();
-        lblPasswordRecuperar = new javax.swing.JLabel();
+        passwordRecuperar = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         lblLoginH1 = new javax.swing.JLabel();
         ckbMostrarPassword = new javax.swing.JCheckBox();
+        logoImage = new javax.swing.JLabel();
+        backgroundImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SARH");
+
+        deskMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtCorreoCorp.setBackground(new java.awt.Color(51, 51, 51));
         txtCorreoCorp.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -54,20 +58,25 @@ public class Principal extends javax.swing.JFrame {
                 txtCorreoCorpFocusLost(evt);
             }
         });
+        deskMain.add(txtCorreoCorp, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 180, 150, -1));
 
         bttLogin.setBackground(new java.awt.Color(51, 51, 51));
         bttLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bttLogin.setForeground(new java.awt.Color(234, 234, 234));
         bttLogin.setText("Ingresar");
         bttLogin.setBorder(null);
+        bttLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttLoginActionPerformed(evt);
+            }
+        });
+        deskMain.add(bttLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 116, 30));
 
-        lblLoginH2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblLoginH2.setForeground(new java.awt.Color(234, 234, 234));
-        lblLoginH2.setText("¿Olvidó su contraseña?");
-
-        lblPasswordRecuperar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblPasswordRecuperar.setForeground(new java.awt.Color(234, 234, 234));
-        lblPasswordRecuperar.setText("Haga clic aquí");
+        passwordRecuperar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        passwordRecuperar.setForeground(new java.awt.Color(234, 234, 234));
+        passwordRecuperar.setText("¿Olvidó su contraseña?");
+        passwordRecuperar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deskMain.add(passwordRecuperar, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 320, -1, -1));
 
         txtPassword.setBackground(new java.awt.Color(51, 51, 51));
         txtPassword.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -83,10 +92,12 @@ public class Principal extends javax.swing.JFrame {
                 txtPasswordFocusLost(evt);
             }
         });
+        deskMain.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 220, 150, 22));
 
-        lblLoginH1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblLoginH1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblLoginH1.setForeground(new java.awt.Color(234, 234, 234));
         lblLoginH1.setText("Inicio de sesión");
+        deskMain.add(lblLoginH1, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 20, -1, -1));
 
         ckbMostrarPassword.setForeground(new java.awt.Color(234, 234, 234));
         ckbMostrarPassword.setText("Mostrar Contraseña");
@@ -95,50 +106,13 @@ public class Principal extends javax.swing.JFrame {
                 ckbMostrarPasswordActionPerformed(evt);
             }
         });
+        deskMain.add(ckbMostrarPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 250, -1, -1));
 
-        deskMain.setLayer(txtCorreoCorp, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        deskMain.setLayer(bttLogin, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        deskMain.setLayer(lblLoginH2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        deskMain.setLayer(lblPasswordRecuperar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        deskMain.setLayer(txtPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        deskMain.setLayer(lblLoginH1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        deskMain.setLayer(ckbMostrarPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        logoImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoCol_120px.png"))); // NOI18N
+        deskMain.add(logoImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 120, 120));
 
-        javax.swing.GroupLayout deskMainLayout = new javax.swing.GroupLayout(deskMain);
-        deskMain.setLayout(deskMainLayout);
-        deskMainLayout.setHorizontalGroup(
-            deskMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(deskMainLayout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
-                .addGroup(deskMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txtCorreoCorp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLoginH2)
-                    .addComponent(lblPasswordRecuperar)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLoginH1)
-                    .addComponent(ckbMostrarPassword))
-                .addGap(105, 105, 105))
-        );
-        deskMainLayout.setVerticalGroup(
-            deskMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(deskMainLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(lblLoginH1)
-                .addGap(130, 130, 130)
-                .addComponent(txtCorreoCorp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ckbMostrarPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bttLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblLoginH2)
-                .addGap(2, 2, 2)
-                .addComponent(lblPasswordRecuperar)
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
+        backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FondoPrincipal.png"))); // NOI18N
+        deskMain.add(backgroundImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 480));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,12 +162,30 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordFocusLost
 
     private void ckbMostrarPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbMostrarPasswordActionPerformed
+        if(String.valueOf(txtPassword.getPassword()).equals("Contraseña"))
+            return;
         if(ckbMostrarPassword.isSelected()){
             txtPassword.setEchoChar((char) 0);
         } else{
             txtPassword.setEchoChar('*');
         }
     }//GEN-LAST:event_ckbMostrarPasswordActionPerformed
+
+    private void bttLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttLoginActionPerformed
+        
+        if(txtCorreoCorp.getText().equals("admin") && String.valueOf(txtPassword.getPassword()).equals("admin")){
+            UsuarioAdministrador adminFrame = new UsuarioAdministrador();
+            adminFrame.show();
+            
+            dispose();
+        }
+        if(txtCorreoCorp.getText().equals("user") && String.valueOf(txtPassword.getPassword()).equals("user")){
+            UsuarioEstandar userFrame = new UsuarioEstandar();
+            userFrame.show();
+            
+            dispose();
+        }
+    }//GEN-LAST:event_bttLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,12 +223,13 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backgroundImage;
     private javax.swing.JButton bttLogin;
     private javax.swing.JCheckBox ckbMostrarPassword;
     private javax.swing.JDesktopPane deskMain;
     private javax.swing.JLabel lblLoginH1;
-    private javax.swing.JLabel lblLoginH2;
-    private javax.swing.JLabel lblPasswordRecuperar;
+    private javax.swing.JLabel logoImage;
+    private javax.swing.JLabel passwordRecuperar;
     private javax.swing.JTextField txtCorreoCorp;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
