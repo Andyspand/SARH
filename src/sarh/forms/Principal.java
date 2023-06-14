@@ -175,13 +175,13 @@ public class Principal extends javax.swing.JFrame {
         
         if(txtCorreoCorp.getText().equals("admin") && String.valueOf(txtPassword.getPassword()).equals("admin")){
             UsuarioAdministrador adminFrame = new UsuarioAdministrador();
-            adminFrame.show();
+            adminFrame.setVisible(true);
             
             dispose();
         }
         if(txtCorreoCorp.getText().equals("user") && String.valueOf(txtPassword.getPassword()).equals("user")){
             UsuarioEstandar userFrame = new UsuarioEstandar();
-            userFrame.show();
+            userFrame.setVisible(true);
             
             dispose();
         }

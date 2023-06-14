@@ -191,7 +191,7 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             
             Principal login = new Principal();
             this.dispose();            
-            login.show();
+            login.setVisible(true);
         }
     }//GEN-LAST:event_opcionLogOffMouseClicked
 

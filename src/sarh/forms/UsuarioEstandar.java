@@ -4,6 +4,7 @@
  */
 package sarh.forms;
 
+import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,11 +13,11 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioEstandar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form UsuarioEstandar
-     */
+    CardLayout userTabs;
     public UsuarioEstandar() {
         initComponents();
+        userTabs = (CardLayout)(userOpciones.getLayout());
+        panelRequisitosSoli.setVisible(false);
     }
 
     /**
@@ -27,11 +28,13 @@ public class UsuarioEstandar extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         deskUsuarioEstandar = new javax.swing.JDesktopPane();
-        scrollUserInfo = new javax.swing.JScrollPane();
+        userOpciones = new javax.swing.JPanel();
         paneUserInfo = new javax.swing.JPanel();
         lblProfilePicture = new javax.swing.JLabel();
+        bttEditarInfo = new javax.swing.JButton();
         panelInfoPersonal = new javax.swing.JPanel();
         lblNombre = new javax.swing.JLabel();
         Nombre = new javax.swing.JLabel();
@@ -54,22 +57,59 @@ public class UsuarioEstandar extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        panelHistorialSolicitudes = new javax.swing.JPanel();
+        scrollpanelListaSoli = new javax.swing.JScrollPane();
+        tableListaSolicitudes = new javax.swing.JTable();
+        lblH1 = new javax.swing.JLabel();
+        bttNuevaSolicitud = new javax.swing.JButton();
+        panelNuevaSolicitud = new javax.swing.JPanel();
+        panelFormNueva = new javax.swing.JPanel();
+        cboxOpcionesSolicitudes = new javax.swing.JComboBox<>();
+        lblh2_1 = new javax.swing.JLabel();
+        lblh2_2 = new javax.swing.JLabel();
+        cboxTipoLicencias = new javax.swing.JComboBox<>();
+        panelRequisitosSoli = new javax.swing.JPanel();
+        panelsolicitudVacaciones = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        panelsolicitudLicencia = new javax.swing.JPanel();
+        bttRegresar = new javax.swing.JButton();
+        bttRealizarSolicitud = new javax.swing.JButton();
         menuEstandar = new javax.swing.JMenuBar();
         menuInfo = new javax.swing.JMenu();
         menuSolicitudes = new javax.swing.JMenu();
         opcionLogOff = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setSize(new java.awt.Dimension(1024, 768));
 
-        scrollUserInfo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 1, 0, 1));
-        scrollUserInfo.setPreferredSize(new java.awt.Dimension(992, 713));
+        deskUsuarioEstandar.setLayout(new java.awt.GridBagLayout());
+
+        userOpciones.setPreferredSize(new java.awt.Dimension(992, 713));
+        userOpciones.setLayout(new java.awt.CardLayout());
 
         paneUserInfo.setPreferredSize(new java.awt.Dimension(992, 713));
+        paneUserInfo.setLayout(new java.awt.GridBagLayout());
 
         lblProfilePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/defaultProfilePicture.jpg"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 421, 0, 0);
+        paneUserInfo.add(lblProfilePicture, gridBagConstraints);
+
+        bttEditarInfo.setText("Editar Información");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
+        paneUserInfo.add(bttEditarInfo, gridBagConstraints);
 
         panelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Personal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
+        panelInfoPersonal.setMaximumSize(new java.awt.Dimension(912, 216));
         panelInfoPersonal.setPreferredSize(new java.awt.Dimension(722, 150));
 
         lblNombre.setText("Nombre Completo:");
@@ -147,6 +187,17 @@ public class UsuarioEstandar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 262;
+        gridBagConstraints.ipady = 46;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(27, 40, 0, 40);
+        paneUserInfo.add(panelInfoPersonal, gridBagConstraints);
+
         panelInfoLaboral.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Laboral", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
 
         jLabel1.setText("Puesto:");
@@ -182,7 +233,7 @@ public class UsuarioEstandar extends javax.swing.JFrame {
                         .addGap(80, 80, 80)
                         .addComponent(jLabel4))
                     .addComponent(jLabel7))
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelInfoLaboralLayout.setVerticalGroup(
             panelInfoLaboralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,60 +252,250 @@ public class UsuarioEstandar extends javax.swing.JFrame {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout paneUserInfoLayout = new javax.swing.GroupLayout(paneUserInfo);
-        paneUserInfo.setLayout(paneUserInfoLayout);
-        paneUserInfoLayout.setHorizontalGroup(
-            paneUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneUserInfoLayout.createSequentialGroup()
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 230;
+        gridBagConstraints.ipady = 60;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 40, 40, 40);
+        paneUserInfo.add(panelInfoLaboral, gridBagConstraints);
+
+        userOpciones.add(paneUserInfo, "cardUserInfo");
+
+        panelHistorialSolicitudes.setLayout(new java.awt.GridBagLayout());
+
+        tableListaSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Tipo de Solicitud", "Solicitud", "Fecha", "Estado de Aprobación"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scrollpanelListaSoli.setViewportView(tableListaSolicitudes);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 964;
+        gridBagConstraints.ipady = 627;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 6, 6, 6);
+        panelHistorialSolicitudes.add(scrollpanelListaSoli, gridBagConstraints);
+
+        lblH1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblH1.setText("Historial de Solicitudes");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 0);
+        panelHistorialSolicitudes.add(lblH1, gridBagConstraints);
+
+        bttNuevaSolicitud.setText("Nueva Solicitud");
+        bttNuevaSolicitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttNuevaSolicitudActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 558, 0, 6);
+        panelHistorialSolicitudes.add(bttNuevaSolicitud, gridBagConstraints);
+
+        userOpciones.add(panelHistorialSolicitudes, "cardServSoli");
+
+        panelFormNueva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nueva Solicitud/Servicio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
+
+        cboxOpcionesSolicitudes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Seleccione una opción)", "Solicitar Certificado Laboral", "Solicitar Vacaciones", "Solicitar Licencia Laboral", "Realizar Sugerencia", "Realizar Reclamo" }));
+        cboxOpcionesSolicitudes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxOpcionesSolicitudesActionPerformed(evt);
+            }
+        });
+
+        lblh2_1.setText("Tipo de Operación:");
+
+        lblh2_2.setText("Tipo de Licencia:");
+        lblh2_2.setEnabled(false);
+
+        cboxTipoLicencias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Seleccione una opción)", "Licencia por Maternidad", "Licencia por Paternidad", "Licencia por Familiar Grave", "Licencia por Incapacidad Temporal" }));
+        cboxTipoLicencias.setEnabled(false);
+        cboxTipoLicencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxTipoLicenciasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelFormNuevaLayout = new javax.swing.GroupLayout(panelFormNueva);
+        panelFormNueva.setLayout(panelFormNuevaLayout);
+        panelFormNuevaLayout.setHorizontalGroup(
+            panelFormNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFormNuevaLayout.createSequentialGroup()
+                .addGroup(panelFormNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblh2_2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblh2_1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(100, 100, 100)
+                .addGroup(panelFormNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cboxOpcionesSolicitudes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cboxTipoLicencias, 0, 411, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelFormNuevaLayout.setVerticalGroup(
+            panelFormNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFormNuevaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(panelFormNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblh2_1)
+                    .addComponent(cboxOpcionesSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(panelFormNuevaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblh2_2)
+                    .addComponent(cboxTipoLicencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        panelRequisitosSoli.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelRequisitosSoli.setLayout(new java.awt.CardLayout());
+
+        jLabel8.setText("Seleccionar Fecha de Inicio: ");
+
+        jLabel9.setText("Selecionar Fecha de Fin:");
+
+        javax.swing.GroupLayout panelsolicitudVacacionesLayout = new javax.swing.GroupLayout(panelsolicitudVacaciones);
+        panelsolicitudVacaciones.setLayout(panelsolicitudVacacionesLayout);
+        panelsolicitudVacacionesLayout.setHorizontalGroup(
+            panelsolicitudVacacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelsolicitudVacacionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelsolicitudVacacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(96, 96, 96)
+                .addGroup(panelsolicitudVacacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(508, 508, 508))
+        );
+        panelsolicitudVacacionesLayout.setVerticalGroup(
+            panelsolicitudVacacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelsolicitudVacacionesLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addGroup(panelsolicitudVacacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(panelsolicitudVacacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(96, 96, 96))
+        );
+
+        panelRequisitosSoli.add(panelsolicitudVacaciones, "card2");
+
+        javax.swing.GroupLayout panelsolicitudLicenciaLayout = new javax.swing.GroupLayout(panelsolicitudLicencia);
+        panelsolicitudLicencia.setLayout(panelsolicitudLicenciaLayout);
+        panelsolicitudLicenciaLayout.setHorizontalGroup(
+            panelsolicitudLicenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 910, Short.MAX_VALUE)
+        );
+        panelsolicitudLicenciaLayout.setVerticalGroup(
+            panelsolicitudLicenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 249, Short.MAX_VALUE)
+        );
+
+        panelRequisitosSoli.add(panelsolicitudLicencia, "card3");
+
+        bttRegresar.setText("Regresar");
+        bttRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttRegresarActionPerformed(evt);
+            }
+        });
+
+        bttRealizarSolicitud.setText("Realizar Solicitud");
+        bttRealizarSolicitud.setEnabled(false);
+
+        javax.swing.GroupLayout panelNuevaSolicitudLayout = new javax.swing.GroupLayout(panelNuevaSolicitud);
+        panelNuevaSolicitud.setLayout(panelNuevaSolicitudLayout);
+        panelNuevaSolicitudLayout.setHorizontalGroup(
+            panelNuevaSolicitudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevaSolicitudLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(paneUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelInfoLaboral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelInfoPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, 912, Short.MAX_VALUE))
+                .addGroup(panelNuevaSolicitudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelRequisitosSoli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelFormNueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(40, 40, 40))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneUserInfoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblProfilePicture, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(421, 421, 421))
+            .addGroup(panelNuevaSolicitudLayout.createSequentialGroup()
+                .addGap(369, 369, 369)
+                .addComponent(bttRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(bttRealizarSolicitud)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        paneUserInfoLayout.setVerticalGroup(
-            paneUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paneUserInfoLayout.createSequentialGroup()
+        panelNuevaSolicitudLayout.setVerticalGroup(
+            panelNuevaSolicitudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNuevaSolicitudLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(lblProfilePicture)
-                .addGap(27, 27, 27)
-                .addComponent(panelInfoPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelFormNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(panelInfoLaboral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(panelRequisitosSoli, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111)
+                .addGroup(panelNuevaSolicitudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bttRegresar)
+                    .addComponent(bttRealizarSolicitud))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
-        scrollUserInfo.setViewportView(paneUserInfo);
+        userOpciones.add(panelNuevaSolicitud, "cardNuevaSolicitud");
 
-        deskUsuarioEstandar.setLayer(scrollUserInfo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout deskUsuarioEstandarLayout = new javax.swing.GroupLayout(deskUsuarioEstandar);
-        deskUsuarioEstandar.setLayout(deskUsuarioEstandarLayout);
-        deskUsuarioEstandarLayout.setHorizontalGroup(
-            deskUsuarioEstandarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deskUsuarioEstandarLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(scrollUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-        deskUsuarioEstandarLayout.setVerticalGroup(
-            deskUsuarioEstandarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deskUsuarioEstandarLayout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(scrollUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(deskUsuarioEstandar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 230;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(16, 16, 16, 16);
+        deskUsuarioEstandar.add(userOpciones, gridBagConstraints);
 
         menuInfo.setText("Información de Usuario");
+        menuInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuInfoMouseClicked(evt);
+            }
+        });
         menuEstandar.add(menuInfo);
 
-        menuSolicitudes.setText("Solicitudes Laborales");
+        menuSolicitudes.setText("Solicitudes y Servicios Laborales");
+        menuSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSolicitudesMouseClicked(evt);
+            }
+        });
         menuEstandar.add(menuSolicitudes);
 
         opcionLogOff.setText("Cerrar Sesión");
@@ -266,6 +507,17 @@ public class UsuarioEstandar extends javax.swing.JFrame {
         menuEstandar.add(opcionLogOff);
 
         setJMenuBar(menuEstandar);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(deskUsuarioEstandar, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(deskUsuarioEstandar, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
+        );
 
         pack();
         setLocationRelativeTo(null);
@@ -279,9 +531,54 @@ public class UsuarioEstandar extends javax.swing.JFrame {
             
             Principal login = new Principal();
             this.dispose();            
-            login.show();
+            login.setVisible(true);
         }
     }//GEN-LAST:event_opcionLogOffMouseClicked
+
+    private void menuSolicitudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSolicitudesMouseClicked
+        userTabs.show(userOpciones, "cardServSoli");
+    }//GEN-LAST:event_menuSolicitudesMouseClicked
+
+    private void menuInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuInfoMouseClicked
+        userTabs.show(userOpciones, "cardUserInfo");
+    }//GEN-LAST:event_menuInfoMouseClicked
+
+    private void bttNuevaSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttNuevaSolicitudActionPerformed
+        userTabs.show(userOpciones, "cardNuevaSolicitud");
+    }//GEN-LAST:event_bttNuevaSolicitudActionPerformed
+
+    private void cboxOpcionesSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxOpcionesSolicitudesActionPerformed
+        if(cboxOpcionesSolicitudes.getSelectedItem().toString()=="Solicitar Licencia Laboral"){
+            lblh2_2.setEnabled(true);
+            cboxTipoLicencias.setEnabled(true);            
+        } else{
+            lblh2_2.setEnabled(false);
+            cboxTipoLicencias.setEnabled(false);
+        }
+        if(cboxOpcionesSolicitudes.getSelectedIndex()!=0 && (cboxTipoLicencias.getSelectedIndex()!=0 || cboxTipoLicencias.isEnabled()==false)){
+            bttRealizarSolicitud.setEnabled(true);
+            panelRequisitosSoli.setVisible(true);
+            
+        }else{
+            bttRealizarSolicitud.setEnabled(false);
+            panelRequisitosSoli.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_cboxOpcionesSolicitudesActionPerformed
+
+    private void cboxTipoLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoLicenciasActionPerformed
+        if(cboxOpcionesSolicitudes.getSelectedIndex()!=0 && cboxTipoLicencias.getSelectedIndex()!=0){
+            bttRealizarSolicitud.setEnabled(true);
+            panelRequisitosSoli.setVisible(true);
+        }else{
+            bttRealizarSolicitud.setEnabled(false);
+            panelRequisitosSoli.setVisible(false);
+        }
+    }//GEN-LAST:event_cboxTipoLicenciasActionPerformed
+
+    private void bttRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegresarActionPerformed
+        userTabs.show(userOpciones, "cardServSoli");
+    }//GEN-LAST:event_bttRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,7 +622,15 @@ public class UsuarioEstandar extends javax.swing.JFrame {
     private javax.swing.JLabel FechaNacimiento;
     private javax.swing.JLabel Nombre;
     private javax.swing.JLabel TelefonoCelular;
+    private javax.swing.JButton bttEditarInfo;
+    private javax.swing.JButton bttNuevaSolicitud;
+    private javax.swing.JButton bttRealizarSolicitud;
+    private javax.swing.JButton bttRegresar;
+    private javax.swing.JComboBox<String> cboxOpcionesSolicitudes;
+    private javax.swing.JComboBox<String> cboxTipoLicencias;
     private javax.swing.JDesktopPane deskUsuarioEstandar;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -333,21 +638,34 @@ public class UsuarioEstandar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblDNI;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblDistrito;
     private javax.swing.JLabel lblEmailPersonal;
     private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblH1;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblProfilePicture;
     private javax.swing.JLabel lblTelefonoCelular;
+    private javax.swing.JLabel lblh2_1;
+    private javax.swing.JLabel lblh2_2;
     private javax.swing.JMenuBar menuEstandar;
     private javax.swing.JMenu menuInfo;
     private javax.swing.JMenu menuSolicitudes;
     private javax.swing.JMenu opcionLogOff;
     private javax.swing.JPanel paneUserInfo;
+    private javax.swing.JPanel panelFormNueva;
+    private javax.swing.JPanel panelHistorialSolicitudes;
     private javax.swing.JPanel panelInfoLaboral;
     private javax.swing.JPanel panelInfoPersonal;
-    private javax.swing.JScrollPane scrollUserInfo;
+    private javax.swing.JPanel panelNuevaSolicitud;
+    private javax.swing.JPanel panelRequisitosSoli;
+    private javax.swing.JPanel panelsolicitudLicencia;
+    private javax.swing.JPanel panelsolicitudVacaciones;
+    private javax.swing.JScrollPane scrollpanelListaSoli;
+    private javax.swing.JTable tableListaSolicitudes;
+    private javax.swing.JPanel userOpciones;
     // End of variables declaration//GEN-END:variables
 }
