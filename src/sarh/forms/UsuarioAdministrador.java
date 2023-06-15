@@ -4,15 +4,17 @@ package sarh.forms;
 import images.TableActionCellEditor;
 import images.TableActionCellRenderer;
 import images.TableActionEvent;
+import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
 public class UsuarioAdministrador extends javax.swing.JFrame {
 
-    
+    CardLayout adminTabs;
     public UsuarioAdministrador() {
         initComponents();
+        adminTabs = (CardLayout)(AdminOpciones.getLayout());
         TableActionEvent event = new TableActionEvent() {
             @Override
             public void onEditar(int row) {
@@ -21,11 +23,16 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
             @Override
             public void onBorrar(int row) {
-                if(tableEmpleados.isEditing()){
-                    tableEmpleados.getCellEditor().stopCellEditing();
+                int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de borrar el registro?",
+                                                "Borrar Registro de Empleado", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); 
+                if(resp == 0 || resp ==-1){
+                    if(tableEmpleados.isEditing()){
+                        tableEmpleados.getCellEditor().stopCellEditing();
+                    }
+                    DefaultTableModel model = (DefaultTableModel) tableEmpleados.getModel();
+                    model.removeRow(row);                
                 }
-                DefaultTableModel model = (DefaultTableModel) tableEmpleados.getModel();
-                model.removeRow(row);
+                
             }
 
             @Override
@@ -47,9 +54,29 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     private void initComponents() {
 
         deskUsuarioAdmin = new javax.swing.JDesktopPane();
+        AdminOpciones = new javax.swing.JPanel();
         panelLista = new javax.swing.JPanel();
         scrollLista = new javax.swing.JScrollPane();
         tableEmpleados = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        panelDesempeno = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        panelReclutamientoSeleccion = new javax.swing.JPanel();
+        panelListaPostulaciones = new javax.swing.JPanel();
+        scrollpanePostulaciones = new javax.swing.JScrollPane();
+        tablePostulaciones = new javax.swing.JTable();
+        panelNomina = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        panelSolicitudesAdmin = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        panelInformes = new javax.swing.JPanel();
+        panelNuevoInforme = new javax.swing.JPanel();
+        lblH3_1 = new javax.swing.JLabel();
+        cboxTipoInforme = new javax.swing.JComboBox<>();
+        bttCrearInforme = new javax.swing.JButton();
         menuAdmin = new javax.swing.JMenuBar();
         menuGestionEmpleados = new javax.swing.JMenu();
         itemListaEmpleados = new javax.swing.JMenuItem();
@@ -62,8 +89,15 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        AdminOpciones.setLayout(new java.awt.CardLayout());
+
         tableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
@@ -93,24 +127,269 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             tableEmpleados.getColumnModel().getColumn(5).setResizable(false);
         }
 
+        jButton1.setText("Registrar Empleado");
+
         javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
         panelLista.setLayout(panelListaLayout);
         panelListaLayout.setHorizontalGroup(
             panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+            .addGroup(panelListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         panelListaLayout.setVerticalGroup(
             panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+                .addComponent(scrollLista, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+
+        AdminOpciones.add(panelLista, "cardLista");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Fecha de Evaluación", "Evaluador", "Calificación", "Comentario"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(40);
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout panelDesempenoLayout = new javax.swing.GroupLayout(panelDesempeno);
+        panelDesempeno.setLayout(panelDesempenoLayout);
+        panelDesempenoLayout.setHorizontalGroup(
+            panelDesempenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDesempenoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelDesempenoLayout.setVerticalGroup(
+            panelDesempenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDesempenoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        deskUsuarioAdmin.setLayer(panelLista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        AdminOpciones.add(panelDesempeno, "cardDesempeno");
+
+        tablePostulaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Puesto", "Fecha de Postulación", "Tipo de Contrato", "Fase de Reclutamiento"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablePostulaciones.setRowHeight(40);
+        scrollpanePostulaciones.setViewportView(tablePostulaciones);
+
+        javax.swing.GroupLayout panelListaPostulacionesLayout = new javax.swing.GroupLayout(panelListaPostulaciones);
+        panelListaPostulaciones.setLayout(panelListaPostulacionesLayout);
+        panelListaPostulacionesLayout.setHorizontalGroup(
+            panelListaPostulacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(scrollpanePostulaciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+        );
+        panelListaPostulacionesLayout.setVerticalGroup(
+            panelListaPostulacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(scrollpanePostulaciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelReclutamientoSeleccionLayout = new javax.swing.GroupLayout(panelReclutamientoSeleccion);
+        panelReclutamientoSeleccion.setLayout(panelReclutamientoSeleccionLayout);
+        panelReclutamientoSeleccionLayout.setHorizontalGroup(
+            panelReclutamientoSeleccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelReclutamientoSeleccionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelListaPostulaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelReclutamientoSeleccionLayout.setVerticalGroup(
+            panelReclutamientoSeleccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelReclutamientoSeleccionLayout.createSequentialGroup()
+                .addComponent(panelListaPostulaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        AdminOpciones.add(panelReclutamientoSeleccion, "cardReclutamiento");
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Puesto", "Salario Base", "Bonificaciones", "Deducciones"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable3.setRowHeight(40);
+        jScrollPane3.setViewportView(jTable3);
+
+        javax.swing.GroupLayout panelNominaLayout = new javax.swing.GroupLayout(panelNomina);
+        panelNomina.setLayout(panelNominaLayout);
+        panelNominaLayout.setHorizontalGroup(
+            panelNominaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNominaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelNominaLayout.setVerticalGroup(
+            panelNominaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNominaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        AdminOpciones.add(panelNomina, "cardNomina");
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Fecha", "Tipo de Solicitud", "Solicitud", "Estado de Aprobación"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable4.setRowHeight(40);
+        jScrollPane4.setViewportView(jTable4);
+
+        javax.swing.GroupLayout panelSolicitudesAdminLayout = new javax.swing.GroupLayout(panelSolicitudesAdmin);
+        panelSolicitudesAdmin.setLayout(panelSolicitudesAdminLayout);
+        panelSolicitudesAdminLayout.setHorizontalGroup(
+            panelSolicitudesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSolicitudesAdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelSolicitudesAdminLayout.setVerticalGroup(
+            panelSolicitudesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSolicitudesAdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        AdminOpciones.add(panelSolicitudesAdmin, "cardSolicitudes");
+
+        panelNuevoInforme.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Realizar Informe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
+
+        lblH3_1.setText("Tipo de Informe:");
+
+        cboxTipoInforme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Seleccione una opción)", "Informe de Plantilla Laboral", "Informe de Postulaciones", "Informe de la Nómina" }));
+        cboxTipoInforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxTipoInformeActionPerformed(evt);
+            }
+        });
+
+        bttCrearInforme.setText("Crear Informe");
+        bttCrearInforme.setEnabled(false);
+
+        javax.swing.GroupLayout panelNuevoInformeLayout = new javax.swing.GroupLayout(panelNuevoInforme);
+        panelNuevoInforme.setLayout(panelNuevoInformeLayout);
+        panelNuevoInformeLayout.setHorizontalGroup(
+            panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoInformeLayout.createSequentialGroup()
+                .addGroup(panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelNuevoInformeLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bttCrearInforme))
+                    .addGroup(panelNuevoInformeLayout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(lblH3_1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                        .addComponent(cboxTipoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(150, 150, 150))
+        );
+        panelNuevoInformeLayout.setVerticalGroup(
+            panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNuevoInformeLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblH3_1)
+                    .addComponent(cboxTipoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(bttCrearInforme)
+                .addGap(28, 28, 28))
+        );
+
+        javax.swing.GroupLayout panelInformesLayout = new javax.swing.GroupLayout(panelInformes);
+        panelInformes.setLayout(panelInformesLayout);
+        panelInformesLayout.setHorizontalGroup(
+            panelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformesLayout.createSequentialGroup()
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addComponent(panelNuevoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
+        panelInformesLayout.setVerticalGroup(
+            panelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInformesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelNuevoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(590, Short.MAX_VALUE))
+        );
+
+        AdminOpciones.add(panelInformes, "cardInformes");
+
+        deskUsuarioAdmin.setLayer(AdminOpciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout deskUsuarioAdminLayout = new javax.swing.GroupLayout(deskUsuarioAdmin);
         deskUsuarioAdmin.setLayout(deskUsuarioAdminLayout);
@@ -118,15 +397,15 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(AdminOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         deskUsuarioAdminLayout.setVerticalGroup(
             deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addComponent(AdminOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         menuGestionEmpleados.setText("Gestión de Empleados");
@@ -140,20 +419,45 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         menuGestionEmpleados.add(itemListaEmpleados);
 
         itemEmpleadosPerformance.setText("Desempeño de Empleados");
+        itemEmpleadosPerformance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEmpleadosPerformanceActionPerformed(evt);
+            }
+        });
         menuGestionEmpleados.add(itemEmpleadosPerformance);
 
         itemReclutamiento.setText("Reclutamiento y Selección");
+        itemReclutamiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReclutamientoActionPerformed(evt);
+            }
+        });
         menuGestionEmpleados.add(itemReclutamiento);
 
         menuAdmin.add(menuGestionEmpleados);
 
         menuNomina.setText("Administrar Nómina");
+        menuNomina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuNominaMouseClicked(evt);
+            }
+        });
         menuAdmin.add(menuNomina);
 
         menuSolicitudesLaborales.setText("Solicitudes Laborales");
+        menuSolicitudesLaborales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSolicitudesLaboralesMouseClicked(evt);
+            }
+        });
         menuAdmin.add(menuSolicitudesLaborales);
 
         menuInformes.setText("Gestión de Informes");
+        menuInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuInformesMouseClicked(evt);
+            }
+        });
         menuAdmin.add(menuInformes);
 
         opcionLogOff.setText("Cerrar Sesión");
@@ -178,11 +482,8 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void itemListaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListaEmpleadosActionPerformed
-        
-    }//GEN-LAST:event_itemListaEmpleadosActionPerformed
 
     private void opcionLogOffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionLogOffMouseClicked
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar su sesión?",
@@ -194,6 +495,38 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             login.setVisible(true);
         }
     }//GEN-LAST:event_opcionLogOffMouseClicked
+/*===================================================================================*/
+    private void menuNominaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuNominaMouseClicked
+        adminTabs.show(AdminOpciones, "cardNomina");
+    }//GEN-LAST:event_menuNominaMouseClicked
+
+    private void menuSolicitudesLaboralesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSolicitudesLaboralesMouseClicked
+        adminTabs.show(AdminOpciones, "cardSolicitudes");
+    }//GEN-LAST:event_menuSolicitudesLaboralesMouseClicked
+
+    private void menuInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuInformesMouseClicked
+        adminTabs.show(AdminOpciones, "cardInformes");
+    }//GEN-LAST:event_menuInformesMouseClicked
+
+    private void itemListaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListaEmpleadosActionPerformed
+        adminTabs.show(AdminOpciones, "cardLista");
+    }//GEN-LAST:event_itemListaEmpleadosActionPerformed
+
+    private void itemEmpleadosPerformanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosPerformanceActionPerformed
+        adminTabs.show(AdminOpciones, "cardDesempeno");
+    }//GEN-LAST:event_itemEmpleadosPerformanceActionPerformed
+
+    private void itemReclutamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReclutamientoActionPerformed
+        adminTabs.show(AdminOpciones, "cardReclutamiento");
+    }//GEN-LAST:event_itemReclutamientoActionPerformed
+
+    private void cboxTipoInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoInformeActionPerformed
+        if(cboxTipoInforme.getSelectedIndex()!=0){
+            bttCrearInforme.setEnabled(true);
+        } else{
+            bttCrearInforme.setEnabled(false);
+        }
+    }//GEN-LAST:event_cboxTipoInformeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,18 +564,38 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AdminOpciones;
+    private javax.swing.JButton bttCrearInforme;
+    private javax.swing.JComboBox<String> cboxTipoInforme;
     private javax.swing.JDesktopPane deskUsuarioAdmin;
     private javax.swing.JMenuItem itemEmpleadosPerformance;
     private javax.swing.JMenuItem itemListaEmpleados;
     private javax.swing.JMenuItem itemReclutamiento;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
+    private javax.swing.JLabel lblH3_1;
     private javax.swing.JMenuBar menuAdmin;
     private javax.swing.JMenu menuGestionEmpleados;
     private javax.swing.JMenu menuInformes;
     private javax.swing.JMenu menuNomina;
     private javax.swing.JMenu menuSolicitudesLaborales;
     private javax.swing.JMenu opcionLogOff;
+    private javax.swing.JPanel panelDesempeno;
+    private javax.swing.JPanel panelInformes;
     private javax.swing.JPanel panelLista;
+    private javax.swing.JPanel panelListaPostulaciones;
+    private javax.swing.JPanel panelNomina;
+    private javax.swing.JPanel panelNuevoInforme;
+    private javax.swing.JPanel panelReclutamientoSeleccion;
+    private javax.swing.JPanel panelSolicitudesAdmin;
     private javax.swing.JScrollPane scrollLista;
+    private javax.swing.JScrollPane scrollpanePostulaciones;
     private javax.swing.JTable tableEmpleados;
+    private javax.swing.JTable tablePostulaciones;
     // End of variables declaration//GEN-END:variables
 }
