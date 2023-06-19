@@ -2,6 +2,7 @@
 package sarh.forms;
 
 import com.toedter.calendar.JDateChooser;
+import images.BotonAccion;
 import images.TableActionCellEditor;
 import images.TableActionCellRenderer;
 import images.TableActionEvent;
@@ -21,14 +22,17 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
     CardLayout adminTabs;
     CardLayout reclutamientoSeleccionTabs;
+    CardLayout listaEmpleadoTabs;
     public UsuarioAdministrador() {
         initComponents();
         adminTabs = (CardLayout)(AdminOpciones.getLayout());
         reclutamientoSeleccionTabs =(CardLayout) (panelReclutamientoSeleccion.getLayout());
+        listaEmpleadoTabs = (CardLayout) (panelLista.getLayout());
         TableActionEvent event = new TableActionEvent() {
             @Override
             public void onEditar(int row) {
                 System.out.println("Editar fila: " + row);
+                //Botón Editar
             }
 
             @Override
@@ -42,12 +46,13 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
                     DefaultTableModel model = (DefaultTableModel) tableEmpleados.getModel();
                     model.removeRow(row);                
                 }
-                
+                //Boton Borrar
             }
 
             @Override
             public void onMostrar(int row) {
                 System.out.println("Mostrar fila: " + row);
+                //Boton Mostrar
             }
         };
         tableEmpleados.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
@@ -62,14 +67,19 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         deskUsuarioAdmin = new javax.swing.JDesktopPane();
         AdminOpciones = new javax.swing.JPanel();
         panelLista = new javax.swing.JPanel();
+        panelListaEmpleados = new javax.swing.JPanel();
         scrollLista = new javax.swing.JScrollPane();
         tableEmpleados = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        bttRegistrarEmpleado = new javax.swing.JButton();
+        bttActualizarEmpleado = new javax.swing.JButton();
+        panelNuevoEmpleado = new javax.swing.JPanel();
+        bttNuevoEmpleado_Regresar = new javax.swing.JButton();
+        panelActualizarEmpleado = new javax.swing.JPanel();
+        bttActualizarEmpleado_Regresar = new javax.swing.JButton();
         panelEvaluaciones = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -159,6 +169,8 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
         AdminOpciones.setLayout(new java.awt.CardLayout());
 
+        panelLista.setLayout(new java.awt.CardLayout());
+
         tableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -195,30 +207,100 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             tableEmpleados.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        jButton1.setText("Registrar Empleado");
+        bttRegistrarEmpleado.setText("Registrar Empleado");
+        bttRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttRegistrarEmpleadoActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
-        panelLista.setLayout(panelListaLayout);
-        panelListaLayout.setHorizontalGroup(
-            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaLayout.createSequentialGroup()
+        bttActualizarEmpleado.setText("Actualizar Empleado");
+        bttActualizarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttActualizarEmpleadoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelListaEmpleadosLayout = new javax.swing.GroupLayout(panelListaEmpleados);
+        panelListaEmpleados.setLayout(panelListaEmpleadosLayout);
+        panelListaEmpleadosLayout.setHorizontalGroup(
+            panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaEmpleadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaEmpleadosLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(bttActualizarEmpleado)
+                        .addGap(18, 18, 18)
+                        .addComponent(bttRegistrarEmpleado)))
                 .addContainerGap())
         );
-        panelListaLayout.setVerticalGroup(
-            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaLayout.createSequentialGroup()
+        panelListaEmpleadosLayout.setVerticalGroup(
+            panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaEmpleadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollLista, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollLista, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bttRegistrarEmpleado)
+                    .addComponent(bttActualizarEmpleado))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        panelLista.add(panelListaEmpleados, "cardListaEmpleados");
+
+        bttNuevoEmpleado_Regresar.setText("Regresar");
+        bttNuevoEmpleado_Regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttNuevoEmpleado_RegresarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelNuevoEmpleadoLayout = new javax.swing.GroupLayout(panelNuevoEmpleado);
+        panelNuevoEmpleado.setLayout(panelNuevoEmpleadoLayout);
+        panelNuevoEmpleadoLayout.setHorizontalGroup(
+            panelNuevoEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(571, Short.MAX_VALUE)
+                .addComponent(bttNuevoEmpleado_Regresar)
+                .addGap(366, 366, 366))
+        );
+        panelNuevoEmpleadoLayout.setVerticalGroup(
+            panelNuevoEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(558, Short.MAX_VALUE)
+                .addComponent(bttNuevoEmpleado_Regresar)
+                .addGap(152, 152, 152))
+        );
+
+        panelLista.add(panelNuevoEmpleado, "cardNuevoEmpleado");
+
+        bttActualizarEmpleado_Regresar.setText("Regresar");
+        bttActualizarEmpleado_Regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttActualizarEmpleado_RegresarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelActualizarEmpleadoLayout = new javax.swing.GroupLayout(panelActualizarEmpleado);
+        panelActualizarEmpleado.setLayout(panelActualizarEmpleadoLayout);
+        panelActualizarEmpleadoLayout.setHorizontalGroup(
+            panelActualizarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(597, Short.MAX_VALUE)
+                .addComponent(bttActualizarEmpleado_Regresar)
+                .addGap(340, 340, 340))
+        );
+        panelActualizarEmpleadoLayout.setVerticalGroup(
+            panelActualizarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(505, Short.MAX_VALUE)
+                .addComponent(bttActualizarEmpleado_Regresar)
+                .addGap(205, 205, 205))
+        );
+
+        panelLista.add(panelActualizarEmpleado, "cardActualizarEmpleado");
 
         AdminOpciones.add(panelLista, "cardLista");
 
@@ -277,7 +359,7 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bttNuevoEvaluado)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         AdminOpciones.add(panelEvaluaciones, "cardDesempeno");
@@ -478,8 +560,8 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         panelListaPerfilesLayout.setVerticalGroup(
             panelListaPerfilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelListaPerfilesLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 75, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 57, Short.MAX_VALUE))
         );
 
         panelReclutamientoSeleccion.add(panelListaPerfiles, "card5");
@@ -1017,6 +1099,22 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     private void bttRegistrarPostulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarPostulacionActionPerformed
         reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardNuevoCandidato");
     }//GEN-LAST:event_bttRegistrarPostulacionActionPerformed
+
+    private void bttRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarEmpleadoActionPerformed
+        listaEmpleadoTabs.show(panelLista, "cardNuevoEmpleado");
+    }//GEN-LAST:event_bttRegistrarEmpleadoActionPerformed
+
+    private void bttActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarEmpleadoActionPerformed
+        listaEmpleadoTabs.show(panelLista, "cardActualizarEmpleado");
+    }//GEN-LAST:event_bttActualizarEmpleadoActionPerformed
+
+    private void bttNuevoEmpleado_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttNuevoEmpleado_RegresarActionPerformed
+        listaEmpleadoTabs.show(panelLista, "cardListaEmpleados");
+    }//GEN-LAST:event_bttNuevoEmpleado_RegresarActionPerformed
+
+    private void bttActualizarEmpleado_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarEmpleado_RegresarActionPerformed
+        listaEmpleadoTabs.show(panelLista, "cardListaEmpleados");
+    }//GEN-LAST:event_bttActualizarEmpleado_RegresarActionPerformed
     //Verifica si los campos están vacios
     private boolean isEmptyVerification(Container jpanel){
         
@@ -1086,13 +1184,17 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AdminOpciones;
+    private javax.swing.JButton bttActualizarEmpleado;
+    private javax.swing.JButton bttActualizarEmpleado_Regresar;
     private javax.swing.JButton bttCrearInforme;
     private javax.swing.JButton bttCrearPerfil;
     private javax.swing.JButton bttEvaluacion_Regresar;
     private javax.swing.JButton bttExaminarCV;
     private javax.swing.JButton bttNuevoCandidato_Regresar;
+    private javax.swing.JButton bttNuevoEmpleado_Regresar;
     private javax.swing.JButton bttNuevoEvaluado;
     private javax.swing.JButton bttNuevoPerfil_Regresar;
+    private javax.swing.JButton bttRegistrarEmpleado;
     private javax.swing.JButton bttRegistrarEvaluado;
     private javax.swing.JButton bttRegistrarPerfil;
     private javax.swing.JButton bttRegistrarPostulacion;
@@ -1104,7 +1206,6 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemEmpleadosPerformance;
     private javax.swing.JMenuItem itemListaEmpleados;
     private javax.swing.JMenuItem itemReclutamiento;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1138,13 +1239,16 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     private javax.swing.JMenu menuNomina;
     private javax.swing.JMenu menuSolicitudesLaborales;
     private javax.swing.JMenu opcionLogOff;
+    private javax.swing.JPanel panelActualizarEmpleado;
     private javax.swing.JPanel panelEvaluaciones;
     private javax.swing.JPanel panelInformes;
     private javax.swing.JPanel panelLista;
+    private javax.swing.JPanel panelListaEmpleados;
     private javax.swing.JPanel panelListaPerfiles;
     private javax.swing.JPanel panelListaPostulaciones;
     private javax.swing.JPanel panelNomina;
     private javax.swing.JPanel panelNuevoCandidato;
+    private javax.swing.JPanel panelNuevoEmpleado;
     private javax.swing.JPanel panelNuevoEvaluado;
     private javax.swing.JPanel panelNuevoInforme;
     private javax.swing.JPanel panelNuevoPerfil;
