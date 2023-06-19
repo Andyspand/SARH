@@ -705,8 +705,7 @@ public class UsuarioEstandar extends javax.swing.JFrame {
                 
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar su sesión?", "Cerrar Sesión",
                                                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);        
-        if(resp == 0 || resp ==-1){
-            
+        if(resp == 0 || resp ==-1){            
             Principal login = new Principal();
             this.dispose();            
             login.setVisible(true);
