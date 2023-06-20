@@ -1,62 +1,29 @@
 
 package sarh.forms;
 
-import com.toedter.calendar.JDateChooser;
-import images.BotonAccion;
 import images.TableActionCellEditor;
 import images.TableActionCellRenderer;
 import images.TableActionEvent;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Container;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.JTextComponent;
+import sql.ConectarPsql;
 
 
 public class UsuarioAdministrador extends javax.swing.JFrame {
 
-    CardLayout adminTabs;
-    CardLayout reclutamientoSeleccionTabs;
-    CardLayout listaEmpleadoTabs;
-    public UsuarioAdministrador() {
+    java.sql.Connection conn=null;
+    public UsuarioAdministrador() throws ClassNotFoundException, SQLException {
         initComponents();
-        adminTabs = (CardLayout)(AdminOpciones.getLayout());
-        reclutamientoSeleccionTabs =(CardLayout) (panelReclutamientoSeleccion.getLayout());
-        listaEmpleadoTabs = (CardLayout) (panelLista.getLayout());
-        TableActionEvent event = new TableActionEvent() {
-            @Override
-            public void onEditar(int row) {
-                System.out.println("Editar fila: " + row);
-                //Botón Editar
-            }
-
-            @Override
-            public void onBorrar(int row) {
-                int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de borrar el registro?",
-                                                "Borrar Registro de Empleado", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); 
-                if(resp == 0 || resp ==-1){
-                    if(tableEmpleados.isEditing()){
-                        tableEmpleados.getCellEditor().stopCellEditing();
-                    }
-                    DefaultTableModel model = (DefaultTableModel) tableEmpleados.getModel();
-                    model.removeRow(row);                
-                }
-                //Boton Borrar
-            }
-
-            @Override
-            public void onMostrar(int row) {
-                System.out.println("Mostrar fila: " + row);
-                //Boton Mostrar
-            }
-        };
-        tableEmpleados.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
-        tableEmpleados.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+        panelNuevoingreso.setVisible(false);
+        llenarDatos();
+        
     }
 
     /**
@@ -69,89 +36,27 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
     private void initComponents() {
 
         deskUsuarioAdmin = new javax.swing.JDesktopPane();
-        AdminOpciones = new javax.swing.JPanel();
-        panelLista = new javax.swing.JPanel();
-        panelListaEmpleados = new javax.swing.JPanel();
         scrollLista = new javax.swing.JScrollPane();
         tableEmpleados = new javax.swing.JTable();
-        bttRegistrarEmpleado = new javax.swing.JButton();
-        bttActualizarEmpleado = new javax.swing.JButton();
-        panelNuevoEmpleado = new javax.swing.JPanel();
-        bttNuevoEmpleado_Regresar = new javax.swing.JButton();
-        panelActualizarEmpleado = new javax.swing.JPanel();
-        bttActualizarEmpleado_Regresar = new javax.swing.JButton();
-        panelEvaluaciones = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        bttNuevoEvaluado = new javax.swing.JButton();
-        panelNuevoEvaluado = new javax.swing.JPanel();
-        lblH3_8 = new javax.swing.JLabel();
-        lblH3_9 = new javax.swing.JLabel();
-        lblH3_10 = new javax.swing.JLabel();
-        lblH3_11 = new javax.swing.JLabel();
-        lblH3_12 = new javax.swing.JLabel();
-        lblH3_13 = new javax.swing.JLabel();
-        txtNombreEvaluado = new javax.swing.JTextField();
-        txtPuestoEvaluado = new javax.swing.JTextField();
-        txtNombreEvaluador = new javax.swing.JTextField();
-        txtCalificacionEvaluacion = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtaComentarioEvaluacion = new javax.swing.JTextArea();
-        txtFechaEvaluacion = new com.toedter.calendar.JDateChooser();
-        bttRegistrarEvaluado = new javax.swing.JButton();
-        bttEvaluacion_Regresar = new javax.swing.JButton();
-        lblH3_14 = new javax.swing.JLabel();
-        txtTipoEvaluacion = new javax.swing.JTextField();
-        panelReclutamientoSeleccion = new javax.swing.JPanel();
-        panelListaPostulaciones = new javax.swing.JPanel();
-        scrollpanePostulaciones = new javax.swing.JScrollPane();
-        tablePostulaciones = new javax.swing.JTable();
-        bttCrearPerfil = new javax.swing.JButton();
-        bttRegistrarPostulacion = new javax.swing.JButton();
-        bttVerPerfiles = new javax.swing.JButton();
-        panelListaPerfiles = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        panelNuevoPerfil = new javax.swing.JPanel();
-        lblH3_15 = new javax.swing.JLabel();
-        txtGradoEstudio = new javax.swing.JTextField();
-        lblH3_16 = new javax.swing.JLabel();
-        scrollConocimientosTec = new javax.swing.JScrollPane();
-        txtaConocimientosTec = new javax.swing.JTextArea();
-        lblH3_17 = new javax.swing.JLabel();
-        txtExperienciaLaboral = new javax.swing.JTextField();
-        lblH3_18 = new javax.swing.JLabel();
-        scrollOtrosReq = new javax.swing.JScrollPane();
-        txtaOtrosReq = new javax.swing.JTextArea();
-        bttRegistrarPerfil = new javax.swing.JButton();
-        bttNuevoPerfil_Regresar = new javax.swing.JButton();
-        panelNuevoCandidato = new javax.swing.JPanel();
-        lblH3_19 = new javax.swing.JLabel();
-        txtNombreCandidato = new javax.swing.JTextField();
-        lblH3_20 = new javax.swing.JLabel();
-        lblH3_21 = new javax.swing.JLabel();
-        lblH3_22 = new javax.swing.JLabel();
-        txtTipoContrato = new javax.swing.JTextField();
-        txtPuestoPostular = new javax.swing.JTextField();
-        lblH3_23 = new javax.swing.JLabel();
-        txtFaseReclutamiento = new javax.swing.JTextField();
-        dateFechaPostulacion = new com.toedter.calendar.JDateChooser();
-        lblH3_24 = new javax.swing.JLabel();
-        txtCV = new javax.swing.JTextField();
-        bttExaminarCV = new javax.swing.JButton();
-        bttRegistrarPostulado = new javax.swing.JButton();
-        bttNuevoCandidato_Regresar = new javax.swing.JButton();
-        panelNomina = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        panelSolicitudesAdmin = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        panelInformes = new javax.swing.JPanel();
-        panelNuevoInforme = new javax.swing.JPanel();
-        lblH3_1 = new javax.swing.JLabel();
-        cboxTipoInforme = new javax.swing.JComboBox<>();
-        bttCrearInforme = new javax.swing.JButton();
+        panelLista = new javax.swing.JPanel();
+        BotonActualizar = new javax.swing.JButton();
+        txtpuesto = new javax.swing.JTextField();
+        txtcodigo = new javax.swing.JTextField();
+        txtuniorga = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtfechfin = new javax.swing.JTextField();
+        txtfechaini = new javax.swing.JTextField();
+        panelNuevoingreso = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         menuAdmin = new javax.swing.JMenuBar();
         menuGestionEmpleados = new javax.swing.JMenu();
         itemListaEmpleados = new javax.swing.JMenuItem();
@@ -163,40 +68,25 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         opcionLogOff = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(1024, 768));
-
-        deskUsuarioAdmin.setPreferredSize(new java.awt.Dimension(1024, 768));
-
-        AdminOpciones.setLayout(new java.awt.CardLayout());
-
-        panelLista.setLayout(new java.awt.CardLayout());
 
         tableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {},
+                {}
             },
             new String [] {
-                "Nombre", "Puesto", "Unidad Organizativa", "Fecha de Inicio", "Fecha de Fin", "Acción"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tableEmpleados.setGridColor(new java.awt.Color(230, 230, 230));
         tableEmpleados.setRowHeight(40);
         tableEmpleados.setSelectionBackground(new java.awt.Color(57, 137, 111));
         tableEmpleados.getTableHeader().setReorderingAllowed(false);
+        tableEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEmpleadosMouseClicked(evt);
+            }
+        });
         scrollLista.setViewportView(tableEmpleados);
         if (tableEmpleados.getColumnModel().getColumnCount() > 0) {
             tableEmpleados.getColumnModel().getColumn(0).setResizable(false);
@@ -207,709 +97,192 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             tableEmpleados.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        bttRegistrarEmpleado.setText("Registrar Empleado");
-        bttRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+        BotonActualizar.setText("Actualizar Datos");
+        BotonActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttRegistrarEmpleadoActionPerformed(evt);
+                BotonActualizarActionPerformed(evt);
             }
         });
 
-        bttActualizarEmpleado.setText("Actualizar Empleado");
-        bttActualizarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+        txtpuesto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttActualizarEmpleadoActionPerformed(evt);
+                txtpuestoActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelListaEmpleadosLayout = new javax.swing.GroupLayout(panelListaEmpleados);
-        panelListaEmpleados.setLayout(panelListaEmpleadosLayout);
-        panelListaEmpleadosLayout.setHorizontalGroup(
-            panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaEmpleadosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollLista, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaEmpleadosLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bttActualizarEmpleado)
-                        .addGap(18, 18, 18)
-                        .addComponent(bttRegistrarEmpleado)))
-                .addContainerGap())
-        );
-        panelListaEmpleadosLayout.setVerticalGroup(
-            panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaEmpleadosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollLista, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelListaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttRegistrarEmpleado)
-                    .addComponent(bttActualizarEmpleado))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
+        txtcodigo.setEnabled(false);
 
-        panelLista.add(panelListaEmpleados, "cardListaEmpleados");
-
-        bttNuevoEmpleado_Regresar.setText("Regresar");
-        bttNuevoEmpleado_Regresar.addActionListener(new java.awt.event.ActionListener() {
+        txtuniorga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttNuevoEmpleado_RegresarActionPerformed(evt);
+                txtuniorgaActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelNuevoEmpleadoLayout = new javax.swing.GroupLayout(panelNuevoEmpleado);
-        panelNuevoEmpleado.setLayout(panelNuevoEmpleadoLayout);
-        panelNuevoEmpleadoLayout.setHorizontalGroup(
-            panelNuevoEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(571, Short.MAX_VALUE)
-                .addComponent(bttNuevoEmpleado_Regresar)
-                .addGap(366, 366, 366))
-        );
-        panelNuevoEmpleadoLayout.setVerticalGroup(
-            panelNuevoEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(558, Short.MAX_VALUE)
-                .addComponent(bttNuevoEmpleado_Regresar)
-                .addGap(152, 152, 152))
-        );
+        jLabel1.setText("Codigo Usuario");
 
-        panelLista.add(panelNuevoEmpleado, "cardNuevoEmpleado");
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel2.setText("Actualizar Datos de los Usuarios");
 
-        bttActualizarEmpleado_Regresar.setText("Regresar");
-        bttActualizarEmpleado_Regresar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Puesto");
+
+        jLabel4.setText("Unidad Organizativa");
+
+        jLabel5.setText("Fecha Fin");
+
+        jLabel6.setText("Fecha Inicio");
+
+        txtfechaini.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttActualizarEmpleado_RegresarActionPerformed(evt);
+                txtfechainiActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelActualizarEmpleadoLayout = new javax.swing.GroupLayout(panelActualizarEmpleado);
-        panelActualizarEmpleado.setLayout(panelActualizarEmpleadoLayout);
-        panelActualizarEmpleadoLayout.setHorizontalGroup(
-            panelActualizarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(597, Short.MAX_VALUE)
-                .addComponent(bttActualizarEmpleado_Regresar)
-                .addGap(340, 340, 340))
-        );
-        panelActualizarEmpleadoLayout.setVerticalGroup(
-            panelActualizarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(505, Short.MAX_VALUE)
-                .addComponent(bttActualizarEmpleado_Regresar)
-                .addGap(205, 205, 205))
-        );
+        jTextField1.setText("jTextField1");
 
-        panelLista.add(panelActualizarEmpleado, "cardActualizarEmpleado");
+        jTextField2.setText("jTextField2");
 
-        AdminOpciones.add(panelLista, "cardLista");
-
-        panelEvaluaciones.setPreferredSize(new java.awt.Dimension(1012, 713));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Evaluado", "Puesto", "Evaluador", "Fecha de Evaluación", "Calificación", "Comentario"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable1.setRowHeight(40);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(80);
-        }
-
-        bttNuevoEvaluado.setText("Nuevo Evaluado");
-        bttNuevoEvaluado.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttNuevoEvaluadoActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelEvaluacionesLayout = new javax.swing.GroupLayout(panelEvaluaciones);
-        panelEvaluaciones.setLayout(panelEvaluacionesLayout);
-        panelEvaluacionesLayout.setHorizontalGroup(
-            panelEvaluacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEvaluacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelEvaluacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEvaluacionesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bttNuevoEvaluado)))
-                .addContainerGap())
-        );
-        panelEvaluacionesLayout.setVerticalGroup(
-            panelEvaluacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEvaluacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bttNuevoEvaluado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        AdminOpciones.add(panelEvaluaciones, "cardDesempeno");
-
-        lblH3_8.setText("Nombre del Evaluado:");
-
-        lblH3_9.setText("Puesto:");
-
-        lblH3_10.setText("Nombre del Evaluador:");
-
-        lblH3_11.setText("Fecha de Evaluación:");
-
-        lblH3_12.setText("Calificación:");
-
-        lblH3_13.setText("Comentario:");
-
-        txtCalificacionEvaluacion.setMaximumSize(new java.awt.Dimension(120, 2147483647));
-
-        txtaComentarioEvaluacion.setColumns(20);
-        txtaComentarioEvaluacion.setRows(5);
-        jScrollPane2.setViewportView(txtaComentarioEvaluacion);
-
-        txtFechaEvaluacion.setDateFormatString("dd/MM/yyyy");
-
-        bttRegistrarEvaluado.setText("Registrar Evaluado");
-        bttRegistrarEvaluado.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttRegistrarEvaluadoActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        bttEvaluacion_Regresar.setText("Regresar");
-        bttEvaluacion_Regresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttEvaluacion_RegresarActionPerformed(evt);
-            }
-        });
-
-        lblH3_14.setText("Tipo de Evaluación:");
-
-        javax.swing.GroupLayout panelNuevoEvaluadoLayout = new javax.swing.GroupLayout(panelNuevoEvaluado);
-        panelNuevoEvaluado.setLayout(panelNuevoEvaluadoLayout);
-        panelNuevoEvaluadoLayout.setHorizontalGroup(
-            panelNuevoEvaluadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNuevoEvaluadoLayout.createSequentialGroup()
-                .addGap(256, 256, 256)
-                .addGroup(panelNuevoEvaluadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblH3_14)
-                    .addGroup(panelNuevoEvaluadoLayout.createSequentialGroup()
-                        .addComponent(bttRegistrarEvaluado)
-                        .addGap(36, 36, 36)
-                        .addComponent(bttEvaluacion_Regresar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                    .addComponent(txtNombreEvaluado)
-                    .addComponent(lblH3_9)
-                    .addComponent(txtPuestoEvaluado)
-                    .addComponent(lblH3_10)
-                    .addComponent(lblH3_11)
-                    .addComponent(lblH3_12)
-                    .addComponent(txtCalificacionEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblH3_13)
-                    .addComponent(txtNombreEvaluador)
-                    .addComponent(txtFechaEvaluacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblH3_8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipoEvaluacion))
-                .addGap(256, 256, 256))
-        );
-        panelNuevoEvaluadoLayout.setVerticalGroup(
-            panelNuevoEvaluadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNuevoEvaluadoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblH3_8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombreEvaluado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblH3_9)
-                .addGap(6, 6, 6)
-                .addComponent(txtPuestoEvaluado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblH3_14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(lblH3_10)
-                .addGap(6, 6, 6)
-                .addComponent(txtNombreEvaluador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblH3_11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblH3_12)
-                .addGap(6, 6, 6)
-                .addComponent(txtCalificacionEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblH3_13)
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(panelNuevoEvaluadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttRegistrarEvaluado)
-                    .addComponent(bttEvaluacion_Regresar))
-                .addGap(20, 20, 20))
-        );
-
-        AdminOpciones.add(panelNuevoEvaluado, "cardNuevoEvaluado");
-
-        panelReclutamientoSeleccion.setLayout(new java.awt.CardLayout());
-
-        tablePostulaciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Puesto", "Fecha de Postulación", "Tipo de Contrato", "Fase de Reclutamiento"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tablePostulaciones.setRowHeight(40);
-        scrollpanePostulaciones.setViewportView(tablePostulaciones);
-        if (tablePostulaciones.getColumnModel().getColumnCount() > 0) {
-            tablePostulaciones.getColumnModel().getColumn(2).setMinWidth(130);
-            tablePostulaciones.getColumnModel().getColumn(2).setMaxWidth(150);
-            tablePostulaciones.getColumnModel().getColumn(3).setMinWidth(150);
-            tablePostulaciones.getColumnModel().getColumn(3).setMaxWidth(200);
-        }
-
-        bttCrearPerfil.setText("Crear Perfil");
-        bttCrearPerfil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttCrearPerfilActionPerformed(evt);
-            }
-        });
-
-        bttRegistrarPostulacion.setText("Registrar Postulación");
-        bttRegistrarPostulacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttRegistrarPostulacionActionPerformed(evt);
-            }
-        });
-
-        bttVerPerfiles.setText("Ver Perfiles");
-
-        javax.swing.GroupLayout panelListaPostulacionesLayout = new javax.swing.GroupLayout(panelListaPostulaciones);
-        panelListaPostulaciones.setLayout(panelListaPostulacionesLayout);
-        panelListaPostulacionesLayout.setHorizontalGroup(
-            panelListaPostulacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollpanePostulaciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1012, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListaPostulacionesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bttRegistrarPostulacion)
+        javax.swing.GroupLayout panelNuevoingresoLayout = new javax.swing.GroupLayout(panelNuevoingreso);
+        panelNuevoingreso.setLayout(panelNuevoingresoLayout);
+        panelNuevoingresoLayout.setHorizontalGroup(
+            panelNuevoingresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNuevoingresoLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(jButton2)
                 .addGap(18, 18, 18)
-                .addComponent(bttCrearPerfil)
-                .addGap(18, 18, 18)
-                .addComponent(bttVerPerfiles)
-                .addContainerGap())
+                .addComponent(jButton3)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
-        panelListaPostulacionesLayout.setVerticalGroup(
-            panelListaPostulacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaPostulacionesLayout.createSequentialGroup()
-                .addComponent(scrollpanePostulaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelListaPostulacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttCrearPerfil)
-                    .addComponent(bttRegistrarPostulacion)
-                    .addComponent(bttVerPerfiles))
-                .addGap(0, 25, Short.MAX_VALUE))
-        );
-
-        panelReclutamientoSeleccion.add(panelListaPostulaciones, "cardListaPostulaciones");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Grado de Estudio", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane5.setViewportView(jTable2);
-
-        javax.swing.GroupLayout panelListaPerfilesLayout = new javax.swing.GroupLayout(panelListaPerfiles);
-        panelListaPerfiles.setLayout(panelListaPerfilesLayout);
-        panelListaPerfilesLayout.setHorizontalGroup(
-            panelListaPerfilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1012, Short.MAX_VALUE)
-        );
-        panelListaPerfilesLayout.setVerticalGroup(
-            panelListaPerfilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelListaPerfilesLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 57, Short.MAX_VALUE))
-        );
-
-        panelReclutamientoSeleccion.add(panelListaPerfiles, "card5");
-
-        lblH3_15.setText("Grado de Estudio:");
-
-        lblH3_16.setText("Conocimientos Técnicos:");
-
-        txtaConocimientosTec.setColumns(20);
-        txtaConocimientosTec.setRows(5);
-        scrollConocimientosTec.setViewportView(txtaConocimientosTec);
-
-        lblH3_17.setText("Experiencia Laboral:");
-
-        lblH3_18.setText("Otros Requerimientos:");
-
-        txtaOtrosReq.setColumns(20);
-        txtaOtrosReq.setRows(5);
-        scrollOtrosReq.setViewportView(txtaOtrosReq);
-
-        bttRegistrarPerfil.setText("Registar Perfil");
-        bttRegistrarPerfil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttRegistrarPerfilActionPerformed(evt);
-            }
-        });
-
-        bttNuevoPerfil_Regresar.setText("Regresar");
-        bttNuevoPerfil_Regresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttNuevoPerfil_RegresarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelNuevoPerfilLayout = new javax.swing.GroupLayout(panelNuevoPerfil);
-        panelNuevoPerfil.setLayout(panelNuevoPerfilLayout);
-        panelNuevoPerfilLayout.setHorizontalGroup(
-            panelNuevoPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoPerfilLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelNuevoPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblH3_18)
-                    .addComponent(lblH3_17)
-                    .addComponent(lblH3_16)
-                    .addComponent(lblH3_15)
-                    .addComponent(txtGradoEstudio)
-                    .addComponent(scrollConocimientosTec, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                    .addComponent(txtExperienciaLaboral)
-                    .addComponent(scrollOtrosReq))
-                .addGap(254, 254, 254))
-            .addGroup(panelNuevoPerfilLayout.createSequentialGroup()
-                .addGap(394, 394, 394)
-                .addComponent(bttRegistrarPerfil)
-                .addGap(26, 26, 26)
-                .addComponent(bttNuevoPerfil_Regresar)
-                .addContainerGap(415, Short.MAX_VALUE))
-        );
-        panelNuevoPerfilLayout.setVerticalGroup(
-            panelNuevoPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNuevoPerfilLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(lblH3_15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtGradoEstudio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblH3_16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollConocimientosTec, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblH3_17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtExperienciaLaboral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblH3_18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollOtrosReq, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addGroup(panelNuevoPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttRegistrarPerfil)
-                    .addComponent(bttNuevoPerfil_Regresar))
-                .addContainerGap(133, Short.MAX_VALUE))
-        );
-
-        panelReclutamientoSeleccion.add(panelNuevoPerfil, "cardNuevoPerfil");
-
-        lblH3_19.setText("Nombre de Candidato:");
-
-        lblH3_20.setText("Puesto a Postular:");
-
-        lblH3_21.setText("Fecha de Postulación:");
-
-        lblH3_22.setText("Tipo de Contrato:");
-
-        lblH3_23.setText("Fase de Reclutamiento:");
-
-        dateFechaPostulacion.setDateFormatString("dd/MM/yyyy");
-
-        lblH3_24.setText("CV:");
-
-        bttExaminarCV.setText("Examinar");
-
-        bttRegistrarPostulado.setText("Registrar Postulado");
-        bttRegistrarPostulado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttRegistrarPostuladoActionPerformed(evt);
-            }
-        });
-
-        bttNuevoCandidato_Regresar.setText("Regresar");
-        bttNuevoCandidato_Regresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttNuevoCandidato_RegresarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelNuevoCandidatoLayout = new javax.swing.GroupLayout(panelNuevoCandidato);
-        panelNuevoCandidato.setLayout(panelNuevoCandidatoLayout);
-        panelNuevoCandidatoLayout.setHorizontalGroup(
-            panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNuevoCandidatoLayout.createSequentialGroup()
-                .addGroup(panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelNuevoCandidatoLayout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addGroup(panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblH3_24)
-                            .addGroup(panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(panelNuevoCandidatoLayout.createSequentialGroup()
-                                    .addGroup(panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(dateFechaPostulacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(txtTipoContrato, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtFaseReclutamiento, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtCV, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(bttExaminarCV))
-                                .addComponent(txtNombreCandidato, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPuestoPostular, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblH3_23, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblH3_22, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblH3_21, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblH3_20, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblH3_19, javax.swing.GroupLayout.Alignment.LEADING))))
-                    .addGroup(panelNuevoCandidatoLayout.createSequentialGroup()
-                        .addGap(387, 387, 387)
-                        .addComponent(bttRegistrarPostulado)
-                        .addGap(18, 18, 18)
-                        .addComponent(bttNuevoCandidato_Regresar)))
-                .addContainerGap(266, Short.MAX_VALUE))
-        );
-        panelNuevoCandidatoLayout.setVerticalGroup(
-            panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNuevoCandidatoLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(lblH3_19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombreCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        panelNuevoingresoLayout.setVerticalGroup(
+            panelNuevoingresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelNuevoingresoLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(lblH3_20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPuestoPostular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(lblH3_21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateFechaPostulacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(lblH3_22)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(lblH3_23)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFaseReclutamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(lblH3_24)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttExaminarCV))
-                .addGap(69, 69, 69)
-                .addGroup(panelNuevoCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttRegistrarPostulado)
-                    .addComponent(bttNuevoCandidato_Regresar))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGroup(panelNuevoingresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        panelReclutamientoSeleccion.add(panelNuevoCandidato, "cardNuevoCandidato");
-
-        AdminOpciones.add(panelReclutamientoSeleccion, "cardReclutamiento");
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Puesto", "Salario Base", "Bonificaciones", "Deducciones"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable3.setRowHeight(40);
-        jScrollPane3.setViewportView(jTable3);
-
-        javax.swing.GroupLayout panelNominaLayout = new javax.swing.GroupLayout(panelNomina);
-        panelNomina.setLayout(panelNominaLayout);
-        panelNominaLayout.setHorizontalGroup(
-            panelNominaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNominaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-                .addContainerGap())
+        javax.swing.GroupLayout panelListaLayout = new javax.swing.GroupLayout(panelLista);
+        panelLista.setLayout(panelListaLayout);
+        panelListaLayout.setHorizontalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaLayout.createSequentialGroup()
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelListaLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(BotonActualizar))
+                    .addGroup(panelListaLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtuniorga, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtfechaini, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtfechfin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelListaLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                .addComponent(panelNuevoingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
-        panelNominaLayout.setVerticalGroup(
-            panelNominaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNominaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        AdminOpciones.add(panelNomina, "cardNomina");
-
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Fecha", "Tipo de Solicitud", "Solicitud", "Estado de Aprobación"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable4.setRowHeight(40);
-        jScrollPane4.setViewportView(jTable4);
-
-        javax.swing.GroupLayout panelSolicitudesAdminLayout = new javax.swing.GroupLayout(panelSolicitudesAdmin);
-        panelSolicitudesAdmin.setLayout(panelSolicitudesAdminLayout);
-        panelSolicitudesAdminLayout.setHorizontalGroup(
-            panelSolicitudesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSolicitudesAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelSolicitudesAdminLayout.setVerticalGroup(
-            panelSolicitudesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSolicitudesAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        AdminOpciones.add(panelSolicitudesAdmin, "cardSolicitudes");
-
-        panelNuevoInforme.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Realizar Informe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
-
-        lblH3_1.setText("Tipo de Informe:");
-
-        cboxTipoInforme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Seleccione una opción)", "Informe de Plantilla Laboral", "Informe de Postulaciones", "Informe de la Nómina" }));
-        cboxTipoInforme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboxTipoInformeActionPerformed(evt);
-            }
-        });
-
-        bttCrearInforme.setText("Crear Informe");
-        bttCrearInforme.setEnabled(false);
-
-        javax.swing.GroupLayout panelNuevoInformeLayout = new javax.swing.GroupLayout(panelNuevoInforme);
-        panelNuevoInforme.setLayout(panelNuevoInformeLayout);
-        panelNuevoInformeLayout.setHorizontalGroup(
-            panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNuevoInformeLayout.createSequentialGroup()
-                .addGroup(panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelNuevoInformeLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bttCrearInforme))
-                    .addGroup(panelNuevoInformeLayout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(lblH3_1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-                        .addComponent(cboxTipoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(150, 150, 150))
-        );
-        panelNuevoInformeLayout.setVerticalGroup(
-            panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNuevoInformeLayout.createSequentialGroup()
+        panelListaLayout.setVerticalGroup(
+            panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListaLayout.createSequentialGroup()
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelListaLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelNuevoingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(panelNuevoInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblH3_1)
-                    .addComponent(cboxTipoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(bttCrearInforme)
-                .addGap(28, 28, 28))
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addGap(31, 31, 31)
+                .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtuniorga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtfechaini, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtfechfin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(BotonActualizar)
+                .addContainerGap(761, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelInformesLayout = new javax.swing.GroupLayout(panelInformes);
-        panelInformes.setLayout(panelInformesLayout);
-        panelInformesLayout.setHorizontalGroup(
-            panelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformesLayout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
-                .addComponent(panelNuevoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
-        );
-        panelInformesLayout.setVerticalGroup(
-            panelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInformesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelNuevoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(547, Short.MAX_VALUE))
-        );
+        jButton1.setText("Insertar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        AdminOpciones.add(panelInformes, "cardInformes");
-
-        deskUsuarioAdmin.setLayer(AdminOpciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskUsuarioAdmin.setLayer(scrollLista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskUsuarioAdmin.setLayer(panelLista, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        deskUsuarioAdmin.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout deskUsuarioAdminLayout = new javax.swing.GroupLayout(deskUsuarioAdmin);
         deskUsuarioAdmin.setLayout(deskUsuarioAdminLayout);
         deskUsuarioAdminLayout.setHorizontalGroup(
             deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(AdminOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jButton1)))
                 .addContainerGap())
+            .addComponent(scrollLista)
         );
         deskUsuarioAdminLayout.setVerticalGroup(
             deskUsuarioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deskUsuarioAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(AdminOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(scrollLista, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         menuGestionEmpleados.setText("Gestión de Empleados");
@@ -922,46 +295,21 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         });
         menuGestionEmpleados.add(itemListaEmpleados);
 
-        itemEmpleadosPerformance.setText("Evaluaciones y Desempeño");
-        itemEmpleadosPerformance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEmpleadosPerformanceActionPerformed(evt);
-            }
-        });
+        itemEmpleadosPerformance.setText("Desempeño de Empleados");
         menuGestionEmpleados.add(itemEmpleadosPerformance);
 
         itemReclutamiento.setText("Reclutamiento y Selección");
-        itemReclutamiento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemReclutamientoActionPerformed(evt);
-            }
-        });
         menuGestionEmpleados.add(itemReclutamiento);
 
         menuAdmin.add(menuGestionEmpleados);
 
         menuNomina.setText("Administrar Nómina");
-        menuNomina.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuNominaMouseClicked(evt);
-            }
-        });
         menuAdmin.add(menuNomina);
 
         menuSolicitudesLaborales.setText("Solicitudes Laborales");
-        menuSolicitudesLaborales.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuSolicitudesLaboralesMouseClicked(evt);
-            }
-        });
         menuAdmin.add(menuSolicitudesLaborales);
 
         menuInformes.setText("Gestión de Informes");
-        menuInformes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuInformesMouseClicked(evt);
-            }
-        });
         menuAdmin.add(menuInformes);
 
         opcionLogOff.setText("Cerrar Sesión");
@@ -978,16 +326,19 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(deskUsuarioAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(deskUsuarioAdmin)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(deskUsuarioAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
+            .addComponent(deskUsuarioAdmin)
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void itemListaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListaEmpleadosActionPerformed
+        
+    }//GEN-LAST:event_itemListaEmpleadosActionPerformed
 
     private void opcionLogOffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionLogOffMouseClicked
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar su sesión?",
@@ -999,154 +350,62 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
             login.setVisible(true);
         }
     }//GEN-LAST:event_opcionLogOffMouseClicked
-/*===================================================================================*/
-    private void menuNominaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuNominaMouseClicked
-        adminTabs.show(AdminOpciones, "cardNomina");
-    }//GEN-LAST:event_menuNominaMouseClicked
 
-    private void menuSolicitudesLaboralesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSolicitudesLaboralesMouseClicked
-        adminTabs.show(AdminOpciones, "cardSolicitudes");
-    }//GEN-LAST:event_menuSolicitudesLaboralesMouseClicked
-
-    private void menuInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuInformesMouseClicked
-        adminTabs.show(AdminOpciones, "cardInformes");
-    }//GEN-LAST:event_menuInformesMouseClicked
-
-    private void itemListaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListaEmpleadosActionPerformed
-        adminTabs.show(AdminOpciones, "cardLista");
-    }//GEN-LAST:event_itemListaEmpleadosActionPerformed
-
-    private void itemEmpleadosPerformanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosPerformanceActionPerformed
-        adminTabs.show(AdminOpciones, "cardDesempeno");
-    }//GEN-LAST:event_itemEmpleadosPerformanceActionPerformed
-
-    private void itemReclutamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReclutamientoActionPerformed
-        adminTabs.show(AdminOpciones, "cardReclutamiento");
-    }//GEN-LAST:event_itemReclutamientoActionPerformed
-
-    private void cboxTipoInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoInformeActionPerformed
-        if(cboxTipoInforme.getSelectedIndex()!=0){
-            bttCrearInforme.setEnabled(true);
-        } else{
-            bttCrearInforme.setEnabled(false);
+    private void BotonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonActualizarActionPerformed
+        try {
+            // TODO add your handling code here:
+            guardar();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioAdministrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cboxTipoInformeActionPerformed
+    }//GEN-LAST:event_BotonActualizarActionPerformed
 
-    private void bttRegistrarEvaluadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarEvaluadoActionPerformed
-        if(!isEmptyVerification(panelNuevoEvaluado) && !txtaComentarioEvaluacion.getText().isBlank()){  
-            
-            
-            //Esto se realiza después de haberse guardado el registro
-            JOptionPane.showMessageDialog(null, "Registro realizado con éxito", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            ClearFields(panelNuevoEvaluado);
-            txtaComentarioEvaluacion.setText("");
-            adminTabs.show(AdminOpciones, "cardDesempeno");
-        } else{
-            JOptionPane.showMessageDialog(null, "Verifique los datos introducidos", "Error", JOptionPane.OK_OPTION);
-        }
-    }//GEN-LAST:event_bttRegistrarEvaluadoActionPerformed
+    private void tableEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmpleadosMouseClicked
+        int selec=tableEmpleados.rowAtPoint(evt.getPoint());
+        txtcodigo.setText(String.valueOf(tableEmpleados.getValueAt( selec,0)));
+        txtpuesto.setText(String.valueOf(tableEmpleados.getValueAt( selec,2)));
+        txtuniorga.setText(String.valueOf(tableEmpleados.getValueAt( selec,3)));
+        txtfechaini.setText(String.valueOf(tableEmpleados.getValueAt( selec,4)));
+        txtfechfin.setText(String.valueOf(tableEmpleados.getValueAt( selec,5)));
+    }//GEN-LAST:event_tableEmpleadosMouseClicked
 
-    private void bttNuevoEvaluadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttNuevoEvaluadoActionPerformed
-        adminTabs.show(AdminOpciones, "cardNuevoEvaluado");
-    }//GEN-LAST:event_bttNuevoEvaluadoActionPerformed
+    private void txtpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpuestoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpuestoActionPerformed
 
-    private void bttEvaluacion_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEvaluacion_RegresarActionPerformed
-        ClearFields(panelNuevoEvaluado);
-        txtaComentarioEvaluacion.setText("");
-        adminTabs.show(AdminOpciones, "cardDesempeno");
-    }//GEN-LAST:event_bttEvaluacion_RegresarActionPerformed
-
-    private void bttRegistrarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarPerfilActionPerformed
-        if(!isEmptyVerification(panelNuevoPerfil) && !txtaConocimientosTec.getText().isBlank()
-                && !txtaOtrosReq.getText().isBlank()){
-            
-            JOptionPane.showMessageDialog(null, "Registro realizado con éxito", "Aviso", JOptionPane.INFORMATION_MESSAGE);            
-            ClearFields(panelNuevoPerfil);
-            txtaConocimientosTec.setText("");
-            txtaOtrosReq.setText("");
-            reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardListaPostulaciones");
-        } else{
-            JOptionPane.showMessageDialog(null, "Verifique los datos introducidos", "Error", JOptionPane.OK_OPTION);
-        }
-    }//GEN-LAST:event_bttRegistrarPerfilActionPerformed
-
-    private void bttNuevoPerfil_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttNuevoPerfil_RegresarActionPerformed
-        ClearFields(panelNuevoPerfil);
-        txtaConocimientosTec.setText("");
-        txtaOtrosReq.setText("");
-        reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardListaPostulaciones");
-    }//GEN-LAST:event_bttNuevoPerfil_RegresarActionPerformed
-
-    private void bttCrearPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttCrearPerfilActionPerformed
-        reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardNuevoPerfil");
-    }//GEN-LAST:event_bttCrearPerfilActionPerformed
-
-    private void bttRegistrarPostuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarPostuladoActionPerformed
-        if(!isEmptyVerification(panelNuevoCandidato)){
-            
-            JOptionPane.showMessageDialog(null, "Registro realizado con éxito", "Aviso", JOptionPane.INFORMATION_MESSAGE);            
-            ClearFields(panelNuevoCandidato);            
-            reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardListaPostulaciones");
-        } else{
-            JOptionPane.showMessageDialog(null, "Verifique los datos introducidos", "Error", JOptionPane.OK_OPTION);
-        }
-    }//GEN-LAST:event_bttRegistrarPostuladoActionPerformed
-
-    private void bttNuevoCandidato_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttNuevoCandidato_RegresarActionPerformed
-        reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardListaPostulaciones");
-    }//GEN-LAST:event_bttNuevoCandidato_RegresarActionPerformed
-
-    private void bttRegistrarPostulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarPostulacionActionPerformed
-        reclutamientoSeleccionTabs.show(panelReclutamientoSeleccion, "cardNuevoCandidato");
-    }//GEN-LAST:event_bttRegistrarPostulacionActionPerformed
-
-    private void bttRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRegistrarEmpleadoActionPerformed
-        listaEmpleadoTabs.show(panelLista, "cardNuevoEmpleado");
-    }//GEN-LAST:event_bttRegistrarEmpleadoActionPerformed
-
-    private void bttActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarEmpleadoActionPerformed
-        listaEmpleadoTabs.show(panelLista, "cardActualizarEmpleado");
-    }//GEN-LAST:event_bttActualizarEmpleadoActionPerformed
-
-    private void bttNuevoEmpleado_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttNuevoEmpleado_RegresarActionPerformed
-        listaEmpleadoTabs.show(panelLista, "cardListaEmpleados");
-    }//GEN-LAST:event_bttNuevoEmpleado_RegresarActionPerformed
-
-    private void bttActualizarEmpleado_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttActualizarEmpleado_RegresarActionPerformed
-        listaEmpleadoTabs.show(panelLista, "cardListaEmpleados");
-    }//GEN-LAST:event_bttActualizarEmpleado_RegresarActionPerformed
-    //Verifica si los campos están vacios
-    private boolean isEmptyVerification(Container jpanel){
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        panelLista.setVisible(false);
+        panelNuevoingreso.setVisible(true);
         
-        for(Component c: jpanel.getComponents())
-        {
-            if(c instanceof JTextField || c instanceof JTextArea){
-                if(((JTextComponent) c).getText().isBlank()){
-                    return true;
-                }
-            }
-            if(c instanceof JDateChooser){
-                if(((JDateChooser) c).getDate()==null){
-                    return true;
-                }
-            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            guardar_datos();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioAdministrador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
-    }
-    //Limpia los campos al activarse una acción
-    private boolean ClearFields(Container jpanel){
-        
-        for(Component c: jpanel.getComponents())
-        {
-            if(c instanceof JTextField || c instanceof JTextArea){
-                ((JTextComponent) c).setText("");
-            }            
-            if(c instanceof JDateChooser){
-                ((JDateChooser) c).setCalendar(null);
-            }
-        }
-        return false;
-    }
+        panelNuevoingreso.setVisible(false);  
+       
+
+ panelLista.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         panelLista.setVisible(true);
+        panelNuevoingreso.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtuniorgaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtuniorgaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtuniorgaActionPerformed
+
+    private void txtfechainiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfechainiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfechainiActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1177,104 +436,181 @@ public class UsuarioAdministrador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UsuarioAdministrador().setVisible(true);
+                try {
+                    new UsuarioAdministrador().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UsuarioAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuarioAdministrador.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
+      public void llenarDatos() throws ClassNotFoundException, SQLException{
+        
+         Class.forName("org.postgresql.Driver");
+        String V_pass=null;
+        String rpt=null;
+        String url = "jdbc:postgresql://localhost:5432/SARH";
+        String cadena="select Codempleado,nombre,puesto,uorgani,fechainicontrato,fechafincontra from empleado ";
+       
+        conn = DriverManager.getConnection(url, "postgres", "sa");
+        
+        PreparedStatement stmt = null;
+        
+        stmt = conn.prepareStatement(cadena);
+        
+        ResultSet rs = stmt.executeQuery();
+          DefaultTableModel modelo = new DefaultTableModel();
+
+ 
+     int i;
+ 
+ 
+ 
+     modelo.addColumn("Codempleado");
+     modelo.addColumn("Nombre");
+     modelo.addColumn("Puesto");
+     modelo.addColumn("Unidad Organizativa");
+     modelo.addColumn("Fecha Inicio");
+     modelo.addColumn("Fecha Fin");
+     
+      String  fila[] = new String[6];
+      String var =null;
+     while (rs.next())
+ {
+    // Se crea un array que será una de las filas de la tabla. 
+ 
+ 
+    // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
+    //for ( i=0;i<3;i++){
+        fila[0] = rs.getString("Codempleado"); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
+        fila[1] = rs.getString("nombre");
+        fila[2] = rs.getString("puesto");
+        fila[3] = rs.getString("uorgani");
+        fila[4] = rs.getString("fechainicontrato");
+        fila[5] = rs.getString("fechafincontra");
+ 
+   // }
+    // Se añade al modelo la fila completa.
+    modelo.addRow(fila);
+           }
+     tableEmpleados.setModel(modelo);
+     
+}
+    public void guardar() throws SQLException{
+        try{
+        Class.forName("org.postgresql.Driver");
+        String V_pass=null;
+        String v_perfil=null;
+        String rpt=null;
+        String fecini=null;
+        String fecfin=null;
+        PreparedStatement stmt = null;
+        String url = "jdbc:postgresql://localhost:5432/SARH";
+        //String cadena="insert into empleado(codempleado) values(?)";
+        fecini=txtfechfin.getText();
+        if (fecini.length() == 0){
+              fecini="fechainicontrato";
+        }else{
+        fecini="'" + txtfechaini.getText()+"'";
+        }
+        fecfin=txtfechfin.getText();
+        if (fecfin.length() == 0){
+              fecfin="fechafincontra";
+        }else{
+        fecfin="'" + txtfechfin.getText()+"'";
+        }
+        String cadena="update empleado set puesto='"+txtpuesto.getText()+"',uorgani='"+ txtuniorga.getText()+"',fechainicontrato="+fecini+",fechafincontra="+fecfin+" where codempleado='"+ txtcodigo.getText()+"'";
+        txtuniorga.setText(cadena);
+        conn = DriverManager.getConnection(url, "postgres", "sa");
+
+        stmt = conn.prepareStatement(cadena);
+
+        stmt.executeUpdate();
+        limpiar();
+     
+        tableEmpleados.setModel(new DefaultTableModel());
+        llenarDatos();
+        
+        }catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectarPsql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void guardar_datos() throws SQLException{
+        try{
+        Class.forName("org.postgresql.Driver");
+        String V_pass=null;
+        String v_perfil=null;
+        String rpt=null;
+        String fec=null;
+        PreparedStatement stmt = null;
+        String url = "jdbc:postgresql://localhost:5432/SARH";
+        String cadena="insert into empleado(codempleado,puesto) values(?,?)";
+        
+        conn = DriverManager.getConnection(url, "postgres", "sa");
+
+        stmt = conn.prepareStatement(cadena);
+        stmt.setString(1, jTextField1.getText());
+        stmt.setString(2, jTextField2.getText());
+            //stmt.setString(3, modelo.getSexo());
+        stmt.executeUpdate();
+        limpiar_insertar();
+     
+        tableEmpleados.setModel(new DefaultTableModel());
+        llenarDatos();
+        
+        
+        }catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectarPsql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public void limpiar() {
+     txtpuesto.setText(null);
+     txtfechaini.setText(null);
+     txtcodigo.setText(null);
+     txtfechfin.setText(null);
+     }
+     public void limpiar_insertar() {
+     jTextField1.setText(null);
+     jTextField2.setText(null);
+     }
+    
+    
+   
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel AdminOpciones;
-    private javax.swing.JButton bttActualizarEmpleado;
-    private javax.swing.JButton bttActualizarEmpleado_Regresar;
-    private javax.swing.JButton bttCrearInforme;
-    private javax.swing.JButton bttCrearPerfil;
-    private javax.swing.JButton bttEvaluacion_Regresar;
-    private javax.swing.JButton bttExaminarCV;
-    private javax.swing.JButton bttNuevoCandidato_Regresar;
-    private javax.swing.JButton bttNuevoEmpleado_Regresar;
-    private javax.swing.JButton bttNuevoEvaluado;
-    private javax.swing.JButton bttNuevoPerfil_Regresar;
-    private javax.swing.JButton bttRegistrarEmpleado;
-    private javax.swing.JButton bttRegistrarEvaluado;
-    private javax.swing.JButton bttRegistrarPerfil;
-    private javax.swing.JButton bttRegistrarPostulacion;
-    private javax.swing.JButton bttRegistrarPostulado;
-    private javax.swing.JButton bttVerPerfiles;
-    private javax.swing.JComboBox<String> cboxTipoInforme;
-    private com.toedter.calendar.JDateChooser dateFechaPostulacion;
+    private javax.swing.JButton BotonActualizar;
     private javax.swing.JDesktopPane deskUsuarioAdmin;
     private javax.swing.JMenuItem itemEmpleadosPerformance;
     private javax.swing.JMenuItem itemListaEmpleados;
     private javax.swing.JMenuItem itemReclutamiento;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JLabel lblH3_1;
-    private javax.swing.JLabel lblH3_10;
-    private javax.swing.JLabel lblH3_11;
-    private javax.swing.JLabel lblH3_12;
-    private javax.swing.JLabel lblH3_13;
-    private javax.swing.JLabel lblH3_14;
-    private javax.swing.JLabel lblH3_15;
-    private javax.swing.JLabel lblH3_16;
-    private javax.swing.JLabel lblH3_17;
-    private javax.swing.JLabel lblH3_18;
-    private javax.swing.JLabel lblH3_19;
-    private javax.swing.JLabel lblH3_20;
-    private javax.swing.JLabel lblH3_21;
-    private javax.swing.JLabel lblH3_22;
-    private javax.swing.JLabel lblH3_23;
-    private javax.swing.JLabel lblH3_24;
-    private javax.swing.JLabel lblH3_8;
-    private javax.swing.JLabel lblH3_9;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JMenuBar menuAdmin;
     private javax.swing.JMenu menuGestionEmpleados;
     private javax.swing.JMenu menuInformes;
     private javax.swing.JMenu menuNomina;
     private javax.swing.JMenu menuSolicitudesLaborales;
     private javax.swing.JMenu opcionLogOff;
-    private javax.swing.JPanel panelActualizarEmpleado;
-    private javax.swing.JPanel panelEvaluaciones;
-    private javax.swing.JPanel panelInformes;
     private javax.swing.JPanel panelLista;
-    private javax.swing.JPanel panelListaEmpleados;
-    private javax.swing.JPanel panelListaPerfiles;
-    private javax.swing.JPanel panelListaPostulaciones;
-    private javax.swing.JPanel panelNomina;
-    private javax.swing.JPanel panelNuevoCandidato;
-    private javax.swing.JPanel panelNuevoEmpleado;
-    private javax.swing.JPanel panelNuevoEvaluado;
-    private javax.swing.JPanel panelNuevoInforme;
-    private javax.swing.JPanel panelNuevoPerfil;
-    private javax.swing.JPanel panelReclutamientoSeleccion;
-    private javax.swing.JPanel panelSolicitudesAdmin;
-    private javax.swing.JScrollPane scrollConocimientosTec;
+    private javax.swing.JPanel panelNuevoingreso;
     private javax.swing.JScrollPane scrollLista;
-    private javax.swing.JScrollPane scrollOtrosReq;
-    private javax.swing.JScrollPane scrollpanePostulaciones;
     private javax.swing.JTable tableEmpleados;
-    private javax.swing.JTable tablePostulaciones;
-    private javax.swing.JTextField txtCV;
-    private javax.swing.JTextField txtCalificacionEvaluacion;
-    private javax.swing.JTextField txtExperienciaLaboral;
-    private javax.swing.JTextField txtFaseReclutamiento;
-    private com.toedter.calendar.JDateChooser txtFechaEvaluacion;
-    private javax.swing.JTextField txtGradoEstudio;
-    private javax.swing.JTextField txtNombreCandidato;
-    private javax.swing.JTextField txtNombreEvaluado;
-    private javax.swing.JTextField txtNombreEvaluador;
-    private javax.swing.JTextField txtPuestoEvaluado;
-    private javax.swing.JTextField txtPuestoPostular;
-    private javax.swing.JTextField txtTipoContrato;
-    private javax.swing.JTextField txtTipoEvaluacion;
-    private javax.swing.JTextArea txtaComentarioEvaluacion;
-    private javax.swing.JTextArea txtaConocimientosTec;
-    private javax.swing.JTextArea txtaOtrosReq;
+    private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtfechaini;
+    private javax.swing.JTextField txtfechfin;
+    private javax.swing.JTextField txtpuesto;
+    private javax.swing.JTextField txtuniorga;
     // End of variables declaration//GEN-END:variables
 }

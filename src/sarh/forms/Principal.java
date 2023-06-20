@@ -4,8 +4,16 @@
  */
 package sarh.forms;
 
+import com.sun.jdi.connect.spi.Connection;
 import java.awt.Color;
+import java.beans.Statement;
 import javax.swing.JOptionPane;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.postgresql.Driver.*;
+import sql.ConectarPsql;
+import sql.obtenerUsuario;
 
 /**
  *
@@ -16,10 +24,11 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
+    private obtenerUsuario obtener=new obtenerUsuario();
     public Principal() {
         initComponents();
     }
-
+    java.sql.Connection conn=null;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,7 +41,6 @@ public class Principal extends javax.swing.JFrame {
         deskMain = new javax.swing.JDesktopPane();
         txtCorreoCorp = new javax.swing.JTextField();
         bttLogin = new javax.swing.JButton();
-        passwordRecuperar = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         lblLoginH1 = new javax.swing.JLabel();
         ckbMostrarPassword = new javax.swing.JCheckBox();
@@ -71,12 +79,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         deskMain.add(bttLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 116, 30));
-
-        passwordRecuperar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        passwordRecuperar.setForeground(new java.awt.Color(234, 234, 234));
-        passwordRecuperar.setText("¿Olvidó su contraseña?");
-        passwordRecuperar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        deskMain.add(passwordRecuperar, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 320, -1, -1));
 
         txtPassword.setBackground(new java.awt.Color(51, 51, 51));
         txtPassword.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -172,19 +174,51 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_ckbMostrarPasswordActionPerformed
 
     private void bttLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttLoginActionPerformed
+         
+        String pa=String.valueOf(txtPassword.getPassword()) ;
+        String r=null;
+      
+        try {
+             r=  devolver(txtCorreoCorp.getText(),pa) ;
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(r.equals("0")){
+            JOptionPane.showMessageDialog(null, "contraseña incorrecta");
+        }
+        else{
+            var_user vu = new var_user();
+            vu.setTxt(txtCorreoCorp.getText());
+            if (r.equals("1")){
+            //perfil admin
+                    UsuarioAdministrador verformulario2 = null;  
+                try {
+                    verformulario2 = new UsuarioAdministrador();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    
+                    verformulario2.setVisible(true);
+
+            }else {
+                //perfil estandar
+                if (r.equals("2")){
+                    UsuarioEstandar verformulario1 = null; 
+                    try {
+                        verformulario1 = new UsuarioEstandar();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    verformulario1.setVisible(true);
+                    
+                }
+            }
+        }
         
-        if(txtCorreoCorp.getText().equals("admin") && String.valueOf(txtPassword.getPassword()).equals("admin")){
-            UsuarioAdministrador adminFrame = new UsuarioAdministrador();
-            adminFrame.setVisible(true);
-            
-            dispose();
-        }
-        if(txtCorreoCorp.getText().equals("user") && String.valueOf(txtPassword.getPassword()).equals("user")){
-            UsuarioEstandar userFrame = new UsuarioEstandar();
-            userFrame.setVisible(true);
-            
-            dispose();
-        }
+ 
+    
     }//GEN-LAST:event_bttLoginActionPerformed
 
     /**
@@ -221,6 +255,42 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
+    
+     public String devolver(String usuario,String pass) throws SQLException{
+        try{
+        
+         
+            Class.forName("org.postgresql.Driver");
+            String V_pass=null;
+            String v_perfil=null;
+            String rpt=null;
+            String url = "jdbc:postgresql://localhost:5432/SARH";
+            String cadena="select * from ingreso where coduser='" + usuario +"'";
+            conn = DriverManager.getConnection(url, "postgres", "sa");
+        
+            PreparedStatement stmt = null;
+        
+            stmt = conn.prepareStatement(cadena);
+        
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                V_pass=rs.getString("password");
+                v_perfil=rs.getString("perfil");
+            }
+         
+            if (V_pass.equals(pass)) {
+                rpt= v_perfil;
+            }else{
+                rpt= "0";
+            }
+            return   rpt;                  
+        }catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectarPsql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backgroundImage;
@@ -229,7 +299,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane deskMain;
     private javax.swing.JLabel lblLoginH1;
     private javax.swing.JLabel logoImage;
-    private javax.swing.JLabel passwordRecuperar;
     private javax.swing.JTextField txtCorreoCorp;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
